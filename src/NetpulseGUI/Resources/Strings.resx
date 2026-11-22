@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Adapter_Down" xml:space="preserve"><value>Отключён</value></data>
+  <data name="Adapter_Tunnel" xml:space="preserve"><value>Туннель</value></data>
+  <data name="Adapter_Up" xml:space="preserve"><value>Подключён</value></data>
+  <data name="Adapter_Virtual" xml:space="preserve"><value>Виртуальный</value></data>
+  <data name="Admin_BannerMessage" xml:space="preserve"><value>Без прав администратора учитывается только общий трафик адаптеров — трафик по процессам (ETW) недоступен.</value></data>
+  <data name="Admin_BannerTitle" xml:space="preserve"><value>Режим «только адаптеры»</value></data>
+  <data name="Admin_Restart" xml:space="preserve"><value>Перезапустить с правами администратора</value></data>
+  <data name="Admin_RestartCancelled" xml:space="preserve"><value>Перезапуск отменён</value></data>
+  <data name="Admin_RestartCancelledDetails" xml:space="preserve"><value>Запрос UAC был отклонён. NetpulseGUI продолжает работу в режиме «только адаптеры».</value></data>
+  <data name="Common_AllTime" xml:space="preserve"><value>Всего</value></data>
+  <data name="Common_Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Common_Download" xml:space="preserve"><value>Загрузка</value></data>
+  <data name="Common_Error" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Common_Month" xml:space="preserve"><value>Этот месяц</value></data>
+  <data name="Common_NoData" xml:space="preserve"><value>Нет данных за выбранный период</value></data>
+  <data name="Common_Path" xml:space="preserve"><value>Путь</value></data>
+  <data name="Common_Paused" xml:space="preserve"><value>пауза</value></data>
+  <data name="Common_Process" xml:space="preserve"><value>Процесс</value></data>
+  <data name="Common_Refresh" xml:space="preserve"><value>Обновить</value></data>
+  <data name="Common_Today" xml:space="preserve"><value>Сегодня</value></data>
+  <data name="Common_Total" xml:space="preserve"><value>Всего</value></data>
+  <data name="Common_Upload" xml:space="preserve"><value>Отдача</value></data>
+  <data name="Dashboard_AllProcesses" xml:space="preserve"><value>Все процессы</value></data>
+  <data name="Dashboard_LiveChart" xml:space="preserve"><value>Скорость в реальном времени</value></data>
+  <data name="Dashboard_MonthDetails" xml:space="preserve"><value>{0} — {1} · прогноз {2}</value></data>
+  <data name="Dashboard_NoActivity" xml:space="preserve"><value>Сейчас нет сетевой активности</value></data>
+  <data name="Dashboard_NoProcessTracking" xml:space="preserve"><value>Трафик по процессам доступен только при запуске с правами администратора.</value></data>
+  <data name="Dashboard_Peak" xml:space="preserve"><value>Пик за сеанс</value></data>
+  <data name="Dashboard_TopNow" xml:space="preserve"><value>Топ процессов прямо сейчас</value></data>
+  <data name="Details_Back" xml:space="preserve"><value>Назад к процессам</value></data>
+  <data name="Details_History" xml:space="preserve"><value>История трафика</value></data>
+  <data name="Details_Live" xml:space="preserve"><value>Скорость за последнюю минуту</value></data>
+  <data name="Details_OpenFolder" xml:space="preserve"><value>Показать в папке</value></data>
+  <data name="Details_RangeTotal" xml:space="preserve"><value>За период: ↓ {0}   ↑ {1}</value></data>
+  <data name="Flyout_NoTracking" xml:space="preserve"><value>Нужны права администратора для учёта по процессам</value></data>
+  <data name="Flyout_Top" xml:space="preserve"><value>Активные процессы</value></data>
+  <data name="Limit_Daily" xml:space="preserve"><value>Дневной лимит</value></data>
+  <data name="Limit_ExceededTitle" xml:space="preserve"><value>{0} исчерпан</value></data>
+  <data name="Limit_Message" xml:space="preserve"><value>Использовано {0} из {1} ({2})</value></data>
+  <data name="Limit_Monthly" xml:space="preserve"><value>Месячный лимит</value></data>
+  <data name="Limit_ReachedTitle" xml:space="preserve"><value>{0}: достигнуто {1}%</value></data>
+  <data name="Limits_CountUpload" xml:space="preserve"><value>Учитывать отдачу</value></data>
+  <data name="Limits_CountUploadHint" xml:space="preserve"><value>Большинство провайдеров считают загрузку и отдачу вместе</value></data>
+  <data name="Limits_DailyHint" xml:space="preserve"><value>Уведомлять при приближении к суточному объёму</value></data>
+  <data name="Limits_Forecast" xml:space="preserve"><value>Прогноз на конец периода: {0}</value></data>
+  <data name="Limits_Gb" xml:space="preserve"><value>ГБ</value></data>
+  <data name="Limits_History" xml:space="preserve"><value>Журнал уведомлений</value></data>
+  <data name="Limits_Left" xml:space="preserve"><value>Осталось {0}</value></data>
+  <data name="Limits_MonthlyHint" xml:space="preserve"><value>Объём за расчётный период провайдера</value></data>
+  <data name="Limits_NoAlerts" xml:space="preserve"><value>Уведомлений пока не было</value></data>
+  <data name="Limits_Notify" xml:space="preserve"><value>Пороги уведомлений</value></data>
+  <data name="Limits_NotifyHint" xml:space="preserve"><value>Тост-уведомление Windows при достижении порога</value></data>
+  <data name="Limits_Period" xml:space="preserve"><value>Период: {0} — {1}, осталось дней: {2}</value></data>
+  <data name="Limits_Settings" xml:space="preserve"><value>Настройка лимитов</value></data>
+  <data name="Limits_StartDay" xml:space="preserve"><value>День начала месяца</value></data>
+  <data name="Limits_StartDayHint" xml:space="preserve"><value>С какого числа провайдер начинает новый расчётный период</value></data>
+  <data name="Limits_Test" xml:space="preserve"><value>Проверить</value></data>
+  <data name="Limits_TestMessage" xml:space="preserve"><value>Так будут выглядеть уведомления о лимитах трафика.</value></data>
+  <data name="Limits_TestTitle" xml:space="preserve"><value>Проверка уведомлений NetpulseGUI</value></data>
+  <data name="Limits_UsedOf" xml:space="preserve"><value>{0} из {1}</value></data>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Дашборд</value></data>
+  <data name="Nav_Limits" xml:space="preserve"><value>Лимиты</value></data>
+  <data name="Nav_Processes" xml:space="preserve"><value>Процессы</value></data>
+  <data name="Nav_Reports" xml:space="preserve"><value>Отчёты</value></data>
+  <data name="Nav_Settings" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Paused_Message" xml:space="preserve"><value>Трафик не учитывается, пока мониторинг на паузе.</value></data>
+  <data name="Paused_Resume" xml:space="preserve"><value>Продолжить</value></data>
+  <data name="Paused_Title" xml:space="preserve"><value>Мониторинг приостановлен</value></data>
+  <data name="Period_AllTime" xml:space="preserve"><value>За всё время</value></data>
+  <data name="Period_Month" xml:space="preserve"><value>Этот месяц</value></data>
+  <data name="Period_Today" xml:space="preserve"><value>Сегодня</value></data>
+  <data name="Period_Week" xml:space="preserve"><value>7 дней</value></data>
+  <data name="Period_Yesterday" xml:space="preserve"><value>Вчера</value></data>
+  <data name="Processes_Activity" xml:space="preserve"><value>Активность</value></data>
+  <data name="Processes_DownNow" xml:space="preserve"><value>↓ Сейчас</value></data>
+  <data name="Processes_DownPeriod" xml:space="preserve"><value>↓ За период</value></data>
+  <data name="Processes_NoTrackingTitle" xml:space="preserve"><value>Учёт по процессам недоступен</value></data>
+  <data name="Processes_Search" xml:space="preserve"><value>Поиск процесса или пути…</value></data>
+  <data name="Processes_Summary" xml:space="preserve"><value>Приложений: {0} · активных: {1}</value></data>
+  <data name="Processes_TotalPeriod" xml:space="preserve"><value>Всего</value></data>
+  <data name="Processes_UpNow" xml:space="preserve"><value>↑ Сейчас</value></data>
+  <data name="Processes_UpPeriod" xml:space="preserve"><value>↑ За период</value></data>
+  <data name="Range_1h" xml:space="preserve"><value>1 час</value></data>
+  <data name="Range_24h" xml:space="preserve"><value>24 часа</value></data>
+  <data name="Range_30d" xml:space="preserve"><value>30 дней</value></data>
+  <data name="Range_5m" xml:space="preserve"><value>5 мин</value></data>
+  <data name="Range_60s" xml:space="preserve"><value>60 сек</value></data>
+  <data name="Range_7d" xml:space="preserve"><value>7 дней</value></data>
+  <data name="Report_AvgDay" xml:space="preserve"><value>В среднем {0} в день</value></data>
+  <data name="Report_AvgHour" xml:space="preserve"><value>В среднем {0} в час</value></data>
+  <data name="Report_ByDays" xml:space="preserve"><value>Трафик по дням</value></data>
+  <data name="Report_ByHours" xml:space="preserve"><value>Трафик по часам</value></data>
+  <data name="Report_ByProcess" xml:space="preserve"><value>Доля процессов</value></data>
+  <data name="Report_ComparedTo" xml:space="preserve"><value>Сравнение с: {0}</value></data>
+  <data name="Report_Custom" xml:space="preserve"><value>Произвольный</value></data>
+  <data name="Report_Day" xml:space="preserve"><value>День</value></data>
+  <data name="Report_ExportFailed" xml:space="preserve"><value>Не удалось экспортировать отчёт</value></data>
+  <data name="Report_Exported" xml:space="preserve"><value>Отчёт сохранён</value></data>
+  <data name="Report_Month" xml:space="preserve"><value>Месяц</value></data>
+  <data name="Report_Next" xml:space="preserve"><value>Следующий период</value></data>
+  <data name="Report_Others" xml:space="preserve"><value>Остальные</value></data>
+  <data name="Report_PeakDay" xml:space="preserve"><value>Пик: {0} — {1}</value></data>
+  <data name="Report_PeakHour" xml:space="preserve"><value>Пик: {0} — {1}</value></data>
+  <data name="Report_Prev" xml:space="preserve"><value>Предыдущий период</value></data>
+  <data name="Report_TopProcesses" xml:space="preserve"><value>Топ процессов за период</value></data>
+  <data name="Report_VsPrev" xml:space="preserve"><value>к прошлому периоду</value></data>
+  <data name="Report_Week" xml:space="preserve"><value>Неделя</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>О программе</value></data>
+  <data name="Settings_AboutText" xml:space="preserve"><value>Монитор сетевого трафика для Windows 10/11</value></data>
+  <data name="Settings_AdapterList" xml:space="preserve"><value>Сетевые адаптеры</value></data>
+  <data name="Settings_AdapterListHint" xml:space="preserve"><value>Снимите галочку, чтобы исключить адаптер из учёта</value></data>
+  <data name="Settings_Adapters" xml:space="preserve"><value>Адаптеры</value></data>
+  <data name="Settings_Appearance" xml:space="preserve"><value>Внешний вид</value></data>
+  <data name="Settings_AutoStart" xml:space="preserve"><value>Запускать вместе с Windows</value></data>
+  <data name="Settings_AutoStartFailed" xml:space="preserve"><value>Не удалось изменить автозапуск</value></data>
+  <data name="Settings_AutoStartHint" xml:space="preserve"><value>Задача Планировщика с наивысшими правами — без запроса UAC при входе</value></data>
+  <data name="Settings_Backup" xml:space="preserve"><value>Резервная копия базы данных</value></data>
+  <data name="Settings_BackupCreate" xml:space="preserve"><value>Создать копию</value></data>
+  <data name="Settings_BackupDone" xml:space="preserve"><value>Резервная копия создана</value></data>
+  <data name="Settings_BackupHint" xml:space="preserve"><value>Сохранить или восстановить всю статистику</value></data>
+  <data name="Settings_Data" xml:space="preserve"><value>Данные</value></data>
+  <data name="Settings_Database" xml:space="preserve"><value>База данных</value></data>
+  <data name="Settings_EtwActive" xml:space="preserve"><value>ETW-сессия активна — трафик учитывается по процессам</value></data>
+  <data name="Settings_EtwDisabled" xml:space="preserve"><value>Учёт по процессам выключен</value></data>
+  <data name="Settings_EtwError" xml:space="preserve"><value>Ошибка ETW: {0}</value></data>
+  <data name="Settings_EtwNeedsAdmin" xml:space="preserve"><value>Требуются права администратора</value></data>
+  <data name="Settings_IncludeVirtual" xml:space="preserve"><value>Учитывать виртуальные адаптеры</value></data>
+  <data name="Settings_IncludeVirtualHint" xml:space="preserve"><value>Hyper-V, WSL, Docker, VirtualBox, VMware</value></data>
+  <data name="Settings_IncludeVpn" xml:space="preserve"><value>Учитывать VPN-адаптеры</value></data>
+  <data name="Settings_IncludeVpnHint" xml:space="preserve"><value>Трафик VPN уже проходит через физический адаптер — включение приведёт к двойному учёту</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="Settings_Logs" xml:space="preserve"><value>Журналы</value></data>
+  <data name="Settings_MinimizeToTray" xml:space="preserve"><value>Сворачивать в трей при закрытии окна</value></data>
+  <data name="Settings_OpenFolder" xml:space="preserve"><value>Открыть папку</value></data>
+  <data name="Settings_ProcessTracking" xml:space="preserve"><value>Учёт трафика по процессам (ETW)</value></data>
+  <data name="Settings_Refresh" xml:space="preserve"><value>Частота обновления интерфейса</value></data>
+  <data name="Settings_Refresh1" xml:space="preserve"><value>Каждую секунду</value></data>
+  <data name="Settings_Refresh2" xml:space="preserve"><value>Раз в 2 секунды</value></data>
+  <data name="Settings_Refresh5" xml:space="preserve"><value>Раз в 5 секунд</value></data>
+  <data name="Settings_RefreshHint" xml:space="preserve"><value>Сбор данных всегда идёт раз в секунду</value></data>
+  <data name="Settings_Reset" xml:space="preserve"><value>Сброс статистики</value></data>
+  <data name="Settings_ResetButton" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Settings_ResetConfirm" xml:space="preserve"><value>Удалить статистику</value></data>
+  <data name="Settings_ResetDone" xml:space="preserve"><value>Статистика сброшена</value></data>
+  <data name="Settings_ResetDoneDetails" xml:space="preserve"><value>Копия прежней базы сохранена в папке backups.</value></data>
+  <data name="Settings_ResetHint" xml:space="preserve"><value>Удалить всю накопленную историю трафика</value></data>
+  <data name="Settings_ResetMessage" xml:space="preserve"><value>Вся история трафика будет удалена. Перед удалением NetpulseGUI сохранит резервную копию в папке данных. Продолжить?</value></data>
+  <data name="Settings_ResetTitle" xml:space="preserve"><value>Сбросить статистику?</value></data>
+  <data name="Settings_RestartNow" xml:space="preserve"><value>Перезапустить</value></data>
+  <data name="Settings_RestartRequired" xml:space="preserve"><value>Требуется перезапуск</value></data>
+  <data name="Settings_RestartRequiredDetails" xml:space="preserve"><value>Изменение вступит в силу после перезапуска NetpulseGUI.</value></data>
+  <data name="Settings_Restore" xml:space="preserve"><value>Восстановить</value></data>
+  <data name="Settings_RestoreConfirm" xml:space="preserve"><value>Восстановить</value></data>
+  <data name="Settings_RestoreDone" xml:space="preserve"><value>База данных восстановлена</value></data>
+  <data name="Settings_RestoreMessage" xml:space="preserve"><value>Текущая статистика будет заменена содержимым резервной копии. Продолжить?</value></data>
+  <data name="Settings_RestoreTitle" xml:space="preserve"><value>Восстановить из копии?</value></data>
+  <data name="Settings_StartMinimized" xml:space="preserve"><value>Запускать свёрнутым в трей</value></data>
+  <data name="Settings_Startup" xml:space="preserve"><value>Запуск</value></data>
+  <data name="Settings_Theme" xml:space="preserve"><value>Тема</value></data>
+  <data name="Settings_ThemeDark" xml:space="preserve"><value>Тёмная</value></data>
+  <data name="Settings_ThemeLight" xml:space="preserve"><value>Светлая</value></data>
+  <data name="Settings_ThemeSystem" xml:space="preserve"><value>Как в системе</value></data>
+  <data name="Settings_Units" xml:space="preserve"><value>Единицы скорости</value></data>
+  <data name="Settings_UnitsBits" xml:space="preserve"><value>Биты (Кбит/с, Мбит/с)</value></data>
+  <data name="Settings_UnitsBytes" xml:space="preserve"><value>Байты (КБ/с, МБ/с)</value></data>
+  <data name="Tray_Exit" xml:space="preserve"><value>Выход</value></data>
+  <data name="Tray_Open" xml:space="preserve"><value>Открыть NetpulseGUI</value></data>
+  <data name="Tray_Pause" xml:space="preserve"><value>Пауза мониторинга</value></data>
+  <data name="Tray_Settings" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Tray_TodayReport" xml:space="preserve"><value>Отчёт за сегодня</value></data>
+  <data name="Xlsx_ByDay" xml:space="preserve"><value>По дням</value></data>
+  <data name="Xlsx_ByHour" xml:space="preserve"><value>По часам</value></data>
+  <data name="Xlsx_Change" xml:space="preserve"><value>Изменение</value></data>
+  <data name="Xlsx_CurrentMb" xml:space="preserve"><value>Период, МБ</value></data>
+  <data name="Xlsx_Date" xml:space="preserve"><value>Дата</value></data>
+  <data name="Xlsx_Hour" xml:space="preserve"><value>Час</value></data>
+  <data name="Xlsx_Period" xml:space="preserve"><value>Период</value></data>
+  <data name="Xlsx_PrevMb" xml:space="preserve"><value>Прошлый период, МБ</value></data>
+  <data name="Xlsx_PrevPeriod" xml:space="preserve"><value>Прошлый период</value></data>
+  <data name="Xlsx_Processes" xml:space="preserve"><value>Процессы</value></data>
+  <data name="Xlsx_Share" xml:space="preserve"><value>Доля</value></data>
+  <data name="Xlsx_Summary" xml:space="preserve"><value>Сводка</value></data>
+  <data name="Report_NoPrev" xml:space="preserve"><value>нет данных за прошлый период</value></data>
+</root>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Adapter_Down" xml:space="preserve"><value>Disconnected</value></data>
+  <data name="Adapter_Tunnel" xml:space="preserve"><value>Tunnel</value></data>
+  <data name="Adapter_Up" xml:space="preserve"><value>Connected</value></data>
+  <data name="Adapter_Virtual" xml:space="preserve"><value>Virtual</value></data>
+  <data name="Admin_BannerMessage" xml:space="preserve"><value>Without administrator rights only adapter totals are tracked — per-process traffic (ETW) is unavailable.</value></data>
+  <data name="Admin_BannerTitle" xml:space="preserve"><value>Adapters-only mode</value></data>
+  <data name="Admin_Restart" xml:space="preserve"><value>Restart as administrator</value></data>
+  <data name="Admin_RestartCancelled" xml:space="preserve"><value>Restart cancelled</value></data>
+  <data name="Admin_RestartCancelledDetails" xml:space="preserve"><value>The UAC prompt was declined. NetpulseGUI keeps running in adapters-only mode.</value></data>
+  <data name="Common_AllTime" xml:space="preserve"><value>All time</value></data>
+  <data name="Common_Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Common_Download" xml:space="preserve"><value>Download</value></data>
+  <data name="Common_Error" xml:space="preserve"><value>Error</value></data>
+  <data name="Common_Month" xml:space="preserve"><value>This month</value></data>
+  <data name="Common_NoData" xml:space="preserve"><value>No data for the selected period</value></data>
+  <data name="Common_Path" xml:space="preserve"><value>Path</value></data>
+  <data name="Common_Paused" xml:space="preserve"><value>paused</value></data>
+  <data name="Common_Process" xml:space="preserve"><value>Process</value></data>
+  <data name="Common_Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="Common_Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Common_Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Common_Upload" xml:space="preserve"><value>Upload</value></data>
+  <data name="Dashboard_AllProcesses" xml:space="preserve"><value>All processes</value></data>
+  <data name="Dashboard_LiveChart" xml:space="preserve"><value>Live speed</value></data>
+  <data name="Dashboard_MonthDetails" xml:space="preserve"><value>{0} — {1} · forecast {2}</value></data>
+  <data name="Dashboard_NoActivity" xml:space="preserve"><value>No network activity right now</value></data>
+  <data name="Dashboard_NoProcessTracking" xml:space="preserve"><value>Per-process traffic is available only when running as administrator.</value></data>
+  <data name="Dashboard_Peak" xml:space="preserve"><value>Session peak</value></data>
+  <data name="Dashboard_TopNow" xml:space="preserve"><value>Top processes right now</value></data>
+  <data name="Details_Back" xml:space="preserve"><value>Back to processes</value></data>
+  <data name="Details_History" xml:space="preserve"><value>Traffic history</value></data>
+  <data name="Details_Live" xml:space="preserve"><value>Speed over the last minute</value></data>
+  <data name="Details_OpenFolder" xml:space="preserve"><value>Show in folder</value></data>
+  <data name="Details_RangeTotal" xml:space="preserve"><value>For the range: ↓ {0}   ↑ {1}</value></data>
+  <data name="Flyout_NoTracking" xml:space="preserve"><value>Administrator rights are required for per-process tracking</value></data>
+  <data name="Flyout_Top" xml:space="preserve"><value>Active processes</value></data>
+  <data name="Limit_Daily" xml:space="preserve"><value>Daily limit</value></data>
+  <data name="Limit_ExceededTitle" xml:space="preserve"><value>{0} exceeded</value></data>
+  <data name="Limit_Message" xml:space="preserve"><value>Used {0} of {1} ({2})</value></data>
+  <data name="Limit_Monthly" xml:space="preserve"><value>Monthly limit</value></data>
+  <data name="Limit_ReachedTitle" xml:space="preserve"><value>{0}: {1}% reached</value></data>
+  <data name="Limits_CountUpload" xml:space="preserve"><value>Count upload</value></data>
+  <data name="Limits_CountUploadHint" xml:space="preserve"><value>Most ISPs count download and upload together</value></data>
+  <data name="Limits_DailyHint" xml:space="preserve"><value>Notify when approaching the daily volume</value></data>
+  <data name="Limits_Forecast" xml:space="preserve"><value>Forecast for the end of the period: {0}</value></data>
+  <data name="Limits_Gb" xml:space="preserve"><value>GB</value></data>
+  <data name="Limits_History" xml:space="preserve"><value>Notification history</value></data>
+  <data name="Limits_Left" xml:space="preserve"><value>{0} left</value></data>
+  <data name="Limits_MonthlyHint" xml:space="preserve"><value>Volume for the ISP billing period</value></data>
+  <data name="Limits_NoAlerts" xml:space="preserve"><value>No notifications yet</value></data>
+  <data name="Limits_Notify" xml:space="preserve"><value>Notification thresholds</value></data>
+  <data name="Limits_NotifyHint" xml:space="preserve"><value>Windows toast notification when a threshold is reached</value></data>
+  <data name="Limits_Period" xml:space="preserve"><value>Period: {0} — {1}, days left: {2}</value></data>
+  <data name="Limits_Settings" xml:space="preserve"><value>Limit settings</value></data>
+  <data name="Limits_StartDay" xml:space="preserve"><value>Billing start day</value></data>
+  <data name="Limits_StartDayHint" xml:space="preserve"><value>Day of month when your ISP starts a new billing period</value></data>
+  <data name="Limits_Test" xml:space="preserve"><value>Test</value></data>
+  <data name="Limits_TestMessage" xml:space="preserve"><value>This is how traffic limit notifications will look.</value></data>
+  <data name="Limits_TestTitle" xml:space="preserve"><value>NetpulseGUI notification test</value></data>
+  <data name="Limits_UsedOf" xml:space="preserve"><value>{0} of {1}</value></data>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Nav_Limits" xml:space="preserve"><value>Limits</value></data>
+  <data name="Nav_Processes" xml:space="preserve"><value>Processes</value></data>
+  <data name="Nav_Reports" xml:space="preserve"><value>Reports</value></data>
+  <data name="Nav_Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Paused_Message" xml:space="preserve"><value>Traffic is not recorded while monitoring is paused.</value></data>
+  <data name="Paused_Resume" xml:space="preserve"><value>Resume</value></data>
+  <data name="Paused_Title" xml:space="preserve"><value>Monitoring paused</value></data>
+  <data name="Period_AllTime" xml:space="preserve"><value>All time</value></data>
+  <data name="Period_Month" xml:space="preserve"><value>This month</value></data>
+  <data name="Period_Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Period_Week" xml:space="preserve"><value>7 days</value></data>
+  <data name="Period_Yesterday" xml:space="preserve"><value>Yesterday</value></data>
+  <data name="Processes_Activity" xml:space="preserve"><value>Activity</value></data>
+  <data name="Processes_DownNow" xml:space="preserve"><value>↓ Now</value></data>
+  <data name="Processes_DownPeriod" xml:space="preserve"><value>↓ Period</value></data>
+  <data name="Processes_NoTrackingTitle" xml:space="preserve"><value>Per-process tracking unavailable</value></data>
+  <data name="Processes_Search" xml:space="preserve"><value>Search process or path…</value></data>
+  <data name="Processes_Summary" xml:space="preserve"><value>Apps: {0} · active: {1}</value></data>
+  <data name="Processes_TotalPeriod" xml:space="preserve"><value>Total</value></data>
+  <data name="Processes_UpNow" xml:space="preserve"><value>↑ Now</value></data>
+  <data name="Processes_UpPeriod" xml:space="preserve"><value>↑ Period</value></data>
+  <data name="Range_1h" xml:space="preserve"><value>1 hour</value></data>
+  <data name="Range_24h" xml:space="preserve"><value>24 hours</value></data>
+  <data name="Range_30d" xml:space="preserve"><value>30 days</value></data>
+  <data name="Range_5m" xml:space="preserve"><value>5 min</value></data>
+  <data name="Range_60s" xml:space="preserve"><value>60 sec</value></data>
+  <data name="Range_7d" xml:space="preserve"><value>7 days</value></data>
+  <data name="Report_AvgDay" xml:space="preserve"><value>{0} per day on average</value></data>
+  <data name="Report_AvgHour" xml:space="preserve"><value>{0} per hour on average</value></data>
+  <data name="Report_ByDays" xml:space="preserve"><value>Traffic by day</value></data>
+  <data name="Report_ByHours" xml:space="preserve"><value>Traffic by hour</value></data>
+  <data name="Report_ByProcess" xml:space="preserve"><value>Share by process</value></data>
+  <data name="Report_ComparedTo" xml:space="preserve"><value>Compared to: {0}</value></data>
+  <data name="Report_Custom" xml:space="preserve"><value>Custom</value></data>
+  <data name="Report_Day" xml:space="preserve"><value>Day</value></data>
+  <data name="Report_ExportFailed" xml:space="preserve"><value>Report export failed</value></data>
+  <data name="Report_Exported" xml:space="preserve"><value>Report saved</value></data>
+  <data name="Report_Month" xml:space="preserve"><value>Month</value></data>
+  <data name="Report_Next" xml:space="preserve"><value>Next period</value></data>
+  <data name="Report_Others" xml:space="preserve"><value>Others</value></data>
+  <data name="Report_PeakDay" xml:space="preserve"><value>Peak: {0} — {1}</value></data>
+  <data name="Report_PeakHour" xml:space="preserve"><value>Peak: {0} — {1}</value></data>
+  <data name="Report_Prev" xml:space="preserve"><value>Previous period</value></data>
+  <data name="Report_TopProcesses" xml:space="preserve"><value>Top processes for the period</value></data>
+  <data name="Report_VsPrev" xml:space="preserve"><value>vs previous period</value></data>
+  <data name="Report_Week" xml:space="preserve"><value>Week</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>About</value></data>
+  <data name="Settings_AboutText" xml:space="preserve"><value>Network traffic monitor for Windows 10/11</value></data>
+  <data name="Settings_AdapterList" xml:space="preserve"><value>Network adapters</value></data>
+  <data name="Settings_AdapterListHint" xml:space="preserve"><value>Uncheck an adapter to exclude it from accounting</value></data>
+  <data name="Settings_Adapters" xml:space="preserve"><value>Adapters</value></data>
+  <data name="Settings_Appearance" xml:space="preserve"><value>Appearance</value></data>
+  <data name="Settings_AutoStart" xml:space="preserve"><value>Start with Windows</value></data>
+  <data name="Settings_AutoStartFailed" xml:space="preserve"><value>Failed to change autostart</value></data>
+  <data name="Settings_AutoStartHint" xml:space="preserve"><value>Task Scheduler task with highest privileges — no UAC prompt at sign-in</value></data>
+  <data name="Settings_Backup" xml:space="preserve"><value>Database backup</value></data>
+  <data name="Settings_BackupCreate" xml:space="preserve"><value>Create backup</value></data>
+  <data name="Settings_BackupDone" xml:space="preserve"><value>Backup created</value></data>
+  <data name="Settings_BackupHint" xml:space="preserve"><value>Save or restore all statistics</value></data>
+  <data name="Settings_Data" xml:space="preserve"><value>Data</value></data>
+  <data name="Settings_Database" xml:space="preserve"><value>Database</value></data>
+  <data name="Settings_EtwActive" xml:space="preserve"><value>ETW session is active — traffic is tracked per process</value></data>
+  <data name="Settings_EtwDisabled" xml:space="preserve"><value>Per-process tracking is disabled</value></data>
+  <data name="Settings_EtwError" xml:space="preserve"><value>ETW error: {0}</value></data>
+  <data name="Settings_EtwNeedsAdmin" xml:space="preserve"><value>Administrator rights required</value></data>
+  <data name="Settings_IncludeVirtual" xml:space="preserve"><value>Include virtual adapters</value></data>
+  <data name="Settings_IncludeVirtualHint" xml:space="preserve"><value>Hyper-V, WSL, Docker, VirtualBox, VMware</value></data>
+  <data name="Settings_IncludeVpn" xml:space="preserve"><value>Include VPN adapters</value></data>
+  <data name="Settings_IncludeVpnHint" xml:space="preserve"><value>VPN traffic already goes through the physical adapter — enabling this double-counts it</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Language</value></data>
+  <data name="Settings_Logs" xml:space="preserve"><value>Logs</value></data>
+  <data name="Settings_MinimizeToTray" xml:space="preserve"><value>Minimize to tray when the window is closed</value></data>
+  <data name="Settings_OpenFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="Settings_ProcessTracking" xml:space="preserve"><value>Per-process traffic tracking (ETW)</value></data>
+  <data name="Settings_Refresh" xml:space="preserve"><value>UI refresh rate</value></data>
+  <data name="Settings_Refresh1" xml:space="preserve"><value>Every second</value></data>
+  <data name="Settings_Refresh2" xml:space="preserve"><value>Every 2 seconds</value></data>
+  <data name="Settings_Refresh5" xml:space="preserve"><value>Every 5 seconds</value></data>
+  <data name="Settings_RefreshHint" xml:space="preserve"><value>Data is always collected every second</value></data>
+  <data name="Settings_Reset" xml:space="preserve"><value>Reset statistics</value></data>
+  <data name="Settings_ResetButton" xml:space="preserve"><value>Reset</value></data>
+  <data name="Settings_ResetConfirm" xml:space="preserve"><value>Delete statistics</value></data>
+  <data name="Settings_ResetDone" xml:space="preserve"><value>Statistics reset</value></data>
+  <data name="Settings_ResetDoneDetails" xml:space="preserve"><value>A copy of the previous database was saved to the backups folder.</value></data>
+  <data name="Settings_ResetHint" xml:space="preserve"><value>Delete all collected traffic history</value></data>
+  <data name="Settings_ResetMessage" xml:space="preserve"><value>All traffic history will be deleted. NetpulseGUI will save a backup to the data folder first. Continue?</value></data>
+  <data name="Settings_ResetTitle" xml:space="preserve"><value>Reset statistics?</value></data>
+  <data name="Settings_RestartNow" xml:space="preserve"><value>Restart</value></data>
+  <data name="Settings_RestartRequired" xml:space="preserve"><value>Restart required</value></data>
+  <data name="Settings_RestartRequiredDetails" xml:space="preserve"><value>The change takes effect after NetpulseGUI restarts.</value></data>
+  <data name="Settings_Restore" xml:space="preserve"><value>Restore</value></data>
+  <data name="Settings_RestoreConfirm" xml:space="preserve"><value>Restore</value></data>
+  <data name="Settings_RestoreDone" xml:space="preserve"><value>Database restored</value></data>
+  <data name="Settings_RestoreMessage" xml:space="preserve"><value>Current statistics will be replaced with the backup contents. Continue?</value></data>
+  <data name="Settings_RestoreTitle" xml:space="preserve"><value>Restore from backup?</value></data>
+  <data name="Settings_StartMinimized" xml:space="preserve"><value>Start minimized to tray</value></data>
+  <data name="Settings_Startup" xml:space="preserve"><value>Startup</value></data>
+  <data name="Settings_Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="Settings_ThemeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="Settings_ThemeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="Settings_ThemeSystem" xml:space="preserve"><value>Use system setting</value></data>
+  <data name="Settings_Units" xml:space="preserve"><value>Speed units</value></data>
+  <data name="Settings_UnitsBits" xml:space="preserve"><value>Bits (Kbps, Mbps)</value></data>
+  <data name="Settings_UnitsBytes" xml:space="preserve"><value>Bytes (KB/s, MB/s)</value></data>
+  <data name="Tray_Exit" xml:space="preserve"><value>Exit</value></data>
+  <data name="Tray_Open" xml:space="preserve"><value>Open NetpulseGUI</value></data>
+  <data name="Tray_Pause" xml:space="preserve"><value>Pause monitoring</value></data>
+  <data name="Tray_Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Tray_TodayReport" xml:space="preserve"><value>Today's report</value></data>
+  <data name="Xlsx_ByDay" xml:space="preserve"><value>By day</value></data>
+  <data name="Xlsx_ByHour" xml:space="preserve"><value>By hour</value></data>
+  <data name="Xlsx_Change" xml:space="preserve"><value>Change</value></data>
+  <data name="Xlsx_CurrentMb" xml:space="preserve"><value>Period, MB</value></data>
+  <data name="Xlsx_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Xlsx_Hour" xml:space="preserve"><value>Hour</value></data>
+  <data name="Xlsx_Period" xml:space="preserve"><value>Period</value></data>
+  <data name="Xlsx_PrevMb" xml:space="preserve"><value>Previous period, MB</value></data>
+  <data name="Xlsx_PrevPeriod" xml:space="preserve"><value>Previous period</value></data>
+  <data name="Xlsx_Processes" xml:space="preserve"><value>Processes</value></data>
+  <data name="Xlsx_Share" xml:space="preserve"><value>Share</value></data>
+  <data name="Xlsx_Summary" xml:space="preserve"><value>Summary</value></data>
+  <data name="Report_NoPrev" xml:space="preserve"><value>no data for the previous period</value></data>
+</root>

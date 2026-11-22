@@ -1,0 +1,136 @@
+<Page x:Class="NetpulseGUI.Views.Pages.ReportsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      xmlns:l="clr-namespace:NetpulseGUI.Localization"
+      Title="Reports">
+    <StackPanel Margin="24,8,24,24">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Top">
+                <ui:Button Content="CSV" Icon="{ui:SymbolIcon DocumentText24}" Command="{Binding ExportCsvCommand}" Margin="0,0,8,0" />
+                <ui:Button Content="Excel" Icon="{ui:SymbolIcon DocumentTable24}" Appearance="Primary" Command="{Binding ExportXlsxCommand}" />
+            </StackPanel>
+            <TextBlock Text="{l:Loc Nav_Reports}" Style="{StaticResource PageTitle}" />
+        </DockPanel>
+
+        <!-- Выбор периода -->
+        <ui:Card Padding="14">
+            <WrapPanel VerticalAlignment="Center">
+                <ComboBox MinWidth="150" ItemsSource="{Binding Kinds}" SelectedItem="{Binding SelectedKind}" DisplayMemberPath="Label" VerticalAlignment="Center" />
+                <ui:Button Icon="{ui:SymbolIcon ChevronLeft24}" Command="{Binding PreviousCommand}" Margin="12,0,4,0" ToolTip="{l:Loc Report_Prev}" />
+                <DatePicker SelectedDate="{Binding Date}" SelectedDateFormat="Short" Width="160" VerticalAlignment="Center"
+                            Visibility="{Binding IsCustom, Converter={StaticResource InvBoolToVis}}" />
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsCustom, Converter={StaticResource BoolToVis}}">
+                    <DatePicker SelectedDate="{Binding CustomFrom}" SelectedDateFormat="Short" Width="160" VerticalAlignment="Center" />
+                    <TextBlock Text="—" Margin="8,0" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    <DatePicker SelectedDate="{Binding CustomTo}" SelectedDateFormat="Short" Width="160" VerticalAlignment="Center" />
+                </StackPanel>
+                <ui:Button Icon="{ui:SymbolIcon ChevronRight24}" Command="{Binding NextCommand}" Margin="4,0,12,0" ToolTip="{l:Loc Report_Next}" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding PeriodText}" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                    <TextBlock Text="{Binding PrevPeriodText}" Style="{StaticResource Caption}" />
+                </StackPanel>
+                <ui:ProgressRing IsIndeterminate="True" Width="20" Height="20" Margin="12,0,0,0"
+                                 Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}" />
+            </WrapPanel>
+        </ui:Card>
+
+        <!-- Итоги и сравнение -->
+        <UniformGrid Columns="3" Margin="-8,16,-8,0">
+            <ui:Card Margin="8,0" Padding="18" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="{l:Loc Common_Download}" Style="{StaticResource Caption}" />
+                    <TextBlock Text="{Binding TotalDown}" Style="{StaticResource MidValue}" Margin="0,6,0,2" Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+                    <TextBlock Text="{Binding ChangeDown}" Style="{StaticResource Caption}" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Margin="8,0" Padding="18" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="{l:Loc Common_Upload}" Style="{StaticResource Caption}" />
+                    <TextBlock Text="{Binding TotalUp}" Style="{StaticResource MidValue}" Margin="0,6,0,2" Foreground="#FFFF9A3C" />
+                    <TextBlock Text="{Binding ChangeUp}" Style="{StaticResource Caption}" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Margin="8,0" Padding="18" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="{l:Loc Common_Total}" Style="{StaticResource Caption}" />
+                    <TextBlock Text="{Binding Total}" Style="{StaticResource MidValue}" Margin="0,6,0,2" />
+                    <TextBlock Text="{Binding ChangeTotal}" Style="{StaticResource Caption}" />
+                </StackPanel>
+            </ui:Card>
+        </UniformGrid>
+
+        <!-- Столбчатый график -->
+        <ui:Card Margin="0,16,0,0" Padding="16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="300" />
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Average}" Style="{StaticResource Caption}" TextAlignment="Right" />
+                        <TextBlock Text="{Binding Peak}" Style="{StaticResource Caption}" TextAlignment="Right" />
+                    </StackPanel>
+                    <TextBlock Text="{Binding ChartTitle}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" />
+                </DockPanel>
+                <lvc:CartesianChart Grid.Row="1" Margin="0,8,0,0" Series="{Binding ColumnSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+                                    TooltipPosition="Top" LegendPosition="Hidden" />
+            </Grid>
+        </ui:Card>
+
+        <!-- Процессы за период -->
+        <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.3*" />
+            </Grid.ColumnDefinitions>
+            <ui:Card Padding="16" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="320" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{l:Loc Report_ByProcess}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                    <lvc:PieChart Grid.Row="1" Series="{Binding PieSeries}" LegendPosition="Bottom" LegendTextPaint="{Binding LegendPaint}"
+                                  LegendTextSize="12" TooltipPosition="Center" InitialRotation="-90" />
+                    <TextBlock Grid.Row="1" Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />
+                </Grid>
+            </ui:Card>
+            <ui:Card Grid.Column="2" Padding="16" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="{l:Loc Report_TopProcesses}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,8" />
+                    <ItemsControl ItemsSource="{Binding TopApps}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" BorderThickness="0" Padding="2,4" HorizontalContentAlignment="Stretch" Cursor="Hand"
+                                        Command="{Binding DataContext.OpenAppCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}" ToolTip="{Binding ToolTip}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="28" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="56" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Icon}" Width="18" Height="18" />
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                                            <ProgressBar Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="3" Margin="0,4,12,0" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2" Text="{Binding PeriodTotalText}" TextAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        <TextBlock Grid.Column="3" Text="{Binding ShareText}" TextAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Caption}" />
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />
+                </StackPanel>
+            </ui:Card>
+        </Grid>
+    </StackPanel>
+</Page>
