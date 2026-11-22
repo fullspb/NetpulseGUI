@@ -74,7 +74,7 @@
                         <TextBlock Text="{l:Loc Common_Upload}" Style="{StaticResource Caption}" VerticalAlignment="Center" />
                     </StackPanel>
                 </DockPanel>
-                <lvc:CartesianChart Grid.Row="1" Margin="0,8,0,0"
+                <lvc:CartesianChart Background="Transparent" Grid.Row="1" Margin="0,8,0,0"
                                     Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
                                     TooltipPosition="Top" LegendPosition="Hidden"
                                     AnimationsSpeed="00:00:00.450" ZoomMode="None" />

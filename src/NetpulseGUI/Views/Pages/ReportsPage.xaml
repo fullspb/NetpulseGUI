@@ -75,7 +75,7 @@
                     </StackPanel>
                     <TextBlock Text="{Binding ChartTitle}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" />
                 </DockPanel>
-                <lvc:CartesianChart Grid.Row="1" Margin="0,8,0,0" Series="{Binding ColumnSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+                <lvc:CartesianChart Background="Transparent" Grid.Row="1" Margin="0,8,0,0" Series="{Binding ColumnSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
                                     TooltipPosition="Top" LegendPosition="Hidden" />
             </Grid>
         </ui:Card>
@@ -94,7 +94,7 @@
                         <RowDefinition Height="320" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="{l:Loc Report_ByProcess}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                    <lvc:PieChart Grid.Row="1" Series="{Binding PieSeries}" LegendPosition="Bottom" LegendTextPaint="{Binding LegendPaint}"
+                    <lvc:PieChart Background="Transparent" Grid.Row="1" Series="{Binding PieSeries}" LegendPosition="Bottom" LegendTextPaint="{Binding LegendPaint}"
                                   LegendTextSize="12" TooltipPosition="Center" InitialRotation="-90" />
                     <TextBlock Grid.Row="1" Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />

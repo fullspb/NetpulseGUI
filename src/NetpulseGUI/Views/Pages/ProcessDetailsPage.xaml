@@ -62,7 +62,7 @@
         <ui:Card Margin="0,16,0,0" Padding="16">
             <StackPanel>
                 <TextBlock Text="{l:Loc Details_Live}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                <lvc:CartesianChart Height="140" Margin="0,8,0,0" Series="{Binding LiveSeries}" XAxes="{Binding HiddenX}" YAxes="{Binding LiveYAxes}"
+                <lvc:CartesianChart Background="Transparent" Height="140" Margin="0,8,0,0" Series="{Binding LiveSeries}" XAxes="{Binding HiddenX}" YAxes="{Binding LiveYAxes}"
                                     TooltipPosition="Hidden" LegendPosition="Hidden" AnimationsSpeed="00:00:00.400" />
             </StackPanel>
         </ui:Card>
@@ -85,7 +85,7 @@
                         <TextBlock Text="{Binding RangeTotal}" Style="{StaticResource Caption}" />
                     </StackPanel>
                 </DockPanel>
-                <lvc:CartesianChart Grid.Row="1" Margin="0,8,0,0" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+                <lvc:CartesianChart Background="Transparent" Grid.Row="1" Margin="0,8,0,0" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
                                     TooltipPosition="Top" LegendPosition="Hidden" />
                 <TextBlock Grid.Row="1" Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" HorizontalAlignment="Center" VerticalAlignment="Center"
                            Visibility="{Binding HasData, Converter={StaticResource InvBoolToVis}}" />

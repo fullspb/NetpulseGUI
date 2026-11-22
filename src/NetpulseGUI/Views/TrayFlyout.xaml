@@ -55,7 +55,7 @@
                 </StackPanel>
             </Grid>
 
-            <lvc:CartesianChart Height="80" Margin="-4,8,-4,0" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+            <lvc:CartesianChart Background="Transparent" Height="80" Margin="-4,8,-4,0" Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
                                 TooltipPosition="Hidden" LegendPosition="Hidden" AnimationsSpeed="00:00:00.300" />
 
             <Grid Margin="0,10,0,0">
