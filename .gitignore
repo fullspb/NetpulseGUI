@@ -1,6 +1,3 @@
-bin/
-obj/
-artifacts/
-.vs/
-*.user
-TestResults/
+/target
+/dist
+/artifacts

@@ -1,0 +1,137 @@
+import { ProcRow, Bar, Slice, AdapterRow, AlertRow } from "widgets.slint";
+
+// Состояние, которое заполняет и читает Rust.
+export global AppState {
+    // общее
+    in-out property <int> page: 0;
+    in property <bool> elevated;
+    in property <bool> etw-active;
+    in property <string> etw-status;
+    in property <bool> paused;
+    in property <string> version;
+    callback navigate(int);
+    callback toggle-pause();
+    callback restart-elevated();
+
+    // главная
+    in property <string> down-speed: "—";
+    in property <string> up-speed: "—";
+    in property <string> peak-down;
+    in property <string> peak-up;
+    in property <string> today-total: "—";
+    in property <string> today-details;
+    in property <string> period-total: "—";
+    in property <string> period-details;
+    in property <string> all-total: "—";
+    in property <string> all-details;
+    in-out property <int> range-index: 0;
+    in property <string> chart-down-line;
+    in property <string> chart-down-area;
+    in property <string> chart-up-line;
+    in property <string> chart-up-area;
+    in property <[string]> chart-ylabels;
+    in property <string> chart-xleft;
+    in property <string> chart-xright;
+    in property <int> chart-points;
+    in property <[ProcRow]> top;
+    in property <int> top-sort-col: 3;
+    in property <bool> top-sort-asc;
+    callback set-range(int);
+    callback sort-top(int);
+    callback open-process(ProcRow);
+    pure callback chart-tip(int) -> string;
+
+    // процессы
+    in property <[ProcRow]> procs;
+    in property <int> procs-sort-col: 3;
+    in property <bool> procs-sort-asc;
+    in-out property <string> procs-filter;
+    callback sort-procs(int);
+    callback filter-procs(string);
+
+    // карточка процесса
+    in property <string> det-name;
+    in property <string> det-path;
+    in property <image> det-icon;
+    in property <string> det-today;
+    in property <string> det-today-details;
+    in property <string> det-period;
+    in property <string> det-period-details;
+    in property <string> det-live;
+    in property <string> det-day-text;
+    in property <[Bar]> det-bars;
+    in property <[string]> det-ylabels;
+    in property <[Bar]> det-days;
+    in property <[string]> det-days-ylabels;
+    callback det-shift(int);
+    callback back();
+
+    // отчёты
+    in-out property <int> rep-kind: 2;
+    in property <string> rep-period-text;
+    in property <string> rep-prev-text;
+    in property <string> rep-down;
+    in property <string> rep-up;
+    in property <string> rep-total;
+    in property <string> rep-change-down;
+    in property <string> rep-change-up;
+    in property <string> rep-change-total;
+    in property <string> rep-average;
+    in property <string> rep-peak;
+    in property <string> rep-chart-title;
+    in property <[Bar]> rep-bars;
+    in property <[string]> rep-ylabels;
+    in property <[Slice]> rep-slices;
+    in property <string> rep-apps-total;
+    in property <[ProcRow]> rep-apps;
+    in property <int> rep-sort-col: 3;
+    in property <bool> rep-sort-asc;
+    callback rep-set-kind(int);
+    callback rep-shift(int);
+    callback rep-today();
+    callback rep-export(string);
+    callback sort-rep(int);
+
+    // лимиты
+    in property <string> lim-today-used;
+    in property <string> lim-today-left;
+    in property <float> lim-today-frac;
+    in property <string> lim-month-used;
+    in property <string> lim-month-left;
+    in property <float> lim-month-frac;
+    in property <string> lim-period-text;
+    in property <string> lim-forecast;
+    in property <bool> lim-forecast-over;
+    in-out property <bool> daily-enabled;
+    in-out property <int> daily-gb: 5;
+    in-out property <bool> monthly-enabled;
+    in-out property <int> monthly-gb: 100;
+    in-out property <int> billing-day: 1;
+    in-out property <bool> count-upload: true;
+    in-out property <bool> n80: true;
+    in-out property <bool> n90: true;
+    in-out property <bool> n100: true;
+    in property <[AlertRow]> alerts;
+    callback limits-changed();
+
+    // настройки
+    in-out property <bool> s-autostart;
+    in-out property <bool> s-min-tray: true;
+    in-out property <bool> s-start-min;
+    in-out property <bool> s-tracking: true;
+    in-out property <int> s-theme;
+    in-out property <int> s-lang;
+    in-out property <int> s-units;
+    in-out property <bool> s-incl-virtual;
+    in-out property <bool> s-incl-vpn;
+    in property <[AdapterRow]> adapters;
+    in property <string> data-path;
+    in property <string> data-size;
+    in property <string> message;
+    callback settings-changed();
+    callback autostart-changed(bool);
+    callback adapter-toggled(string, bool);
+    callback open-data-folder();
+    callback reset-stats();
+    callback open-github();
+}

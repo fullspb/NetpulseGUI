@@ -1,0 +1,28 @@
+// Цвета и шрифты оформления в духе Windows 11 (Fluent).
+
+export global Theme {
+    in-out property <bool> dark: false;
+
+    out property <color> window-bg: dark ? #202020 : #f3f3f3;
+    out property <color> sidebar-bg: dark ? #1c1c1c : #ebebeb;
+    out property <color> card: dark ? #2b2b2b : #fbfbfb;
+    out property <color> card-hover: dark ? #323232 : #f5f5f5;
+    out property <color> border: dark ? #3a3a3a : #e3e3e3;
+    out property <color> text: dark ? #ffffff : #1b1b1b;
+    out property <color> text2: dark ? #c5c5c5 : #5c5c5c;
+    out property <color> text3: dark ? #8f8f8f : #8a8a8a;
+    out property <color> accent: dark ? #60cdff : #005fb8;
+    out property <color> accent-text: dark ? #000000 : #ffffff;
+    out property <color> nav-selected: dark ? #2d2d2d : #e0e0e0;
+    out property <color> nav-hover: dark ? #2a2a2a : #e5e5e5;
+    out property <color> down: dark ? #60cdff : #0078d4;
+    out property <color> up: dark ? #ffb25c : #e07000;
+    out property <color> grid: dark ? #3a3a3a : #e6e6e6;
+    out property <color> danger: dark ? #ff99a4 : #c42b1c;
+    out property <color> success: dark ? #6ccb5f : #0f7b0f;
+    out property <color> track: dark ? #3d3d3d : #dcdcdc;
+    out property <color> tooltip: dark ? #2c2c2c : #ffffff;
+
+    out property <string> icon-font: "Segoe MDL2 Assets";
+    out property <length> radius: 8px;
+}

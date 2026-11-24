@@ -1,0 +1,481 @@
+import { ScrollView, ListView, Switch, CheckBox, ComboBox, SpinBox, LineEdit } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+import { AppState } from "state.slint";
+import { Card, Caption, SectionTitle, PageTitle, Glyph, FlatButton, Segmented, SettingRow, StatCard, ProcTable, LineChart, BarChart, Donut, Meter, Legend, ProcRow } from "widgets.slint";
+
+component AdminNotice inherits Card {
+    HorizontalLayout {
+        padding: 14px;
+        spacing: 12px;
+        Glyph { text: "\u{EA18}"; color: Theme.up; width: 20px; }
+        VerticalLayout {
+            alignment: center;
+            horizontal-stretch: 1;
+            Text { text: @tr("Учёт по процессам недоступен"); color: Theme.text; font-weight: 600; font-size: 13px; }
+            Caption { text: AppState.etw-status; wrap: word-wrap; }
+        }
+        if !AppState.elevated: FlatButton {
+            icon: "\u{EA18}";
+            text: @tr("Перезапустить от администратора");
+            clicked => { AppState.restart-elevated(); }
+        }
+    }
+}
+
+export component DashboardPage inherits ScrollView {
+    VerticalLayout {
+        alignment: start;
+        padding: 24px;
+        padding-top: 18px;
+        spacing: 14px;
+        HorizontalLayout {
+            PageTitle { text: @tr("Главная"); }
+            Rectangle { horizontal-stretch: 1; }
+            FlatButton {
+                icon: AppState.paused ? "\u{E768}" : "\u{E769}";
+                text: AppState.paused ? @tr("Продолжить") : @tr("Пауза");
+                clicked => { AppState.toggle-pause(); }
+            }
+        }
+        HorizontalLayout {
+            spacing: 12px;
+            StatCard { icon: "\u{E896}"; title: @tr("Загрузка"); value: AppState.down-speed; details: AppState.peak-down; accent: Theme.down; }
+            StatCard { icon: "\u{E898}"; title: @tr("Отдача"); value: AppState.up-speed; details: AppState.peak-up; accent: Theme.up; }
+            StatCard { icon: "\u{E787}"; title: @tr("Сегодня"); value: AppState.today-total; details: AppState.today-details; }
+            StatCard { icon: "\u{E787}"; title: @tr("Расчётный период"); value: AppState.period-total; details: AppState.period-details; }
+            StatCard { icon: "\u{E81C}"; title: @tr("За всё время"); value: AppState.all-total; details: AppState.all-details; }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 10px;
+                HorizontalLayout {
+                    spacing: 12px;
+                    SectionTitle { text: @tr("Скорость"); vertical-alignment: center; }
+                    Legend { }
+                    Rectangle { horizontal-stretch: 1; }
+                    Segmented {
+                        items: [@tr("1 мин"), @tr("5 мин"), @tr("1 час")];
+                        current: AppState.range-index;
+                        changed(i) => { AppState.set-range(i); }
+                    }
+                }
+                LineChart {
+                    height: 240px;
+                    down-line: AppState.chart-down-line;
+                    down-area: AppState.chart-down-area;
+                    up-line: AppState.chart-up-line;
+                    up-area: AppState.chart-up-area;
+                    y-labels: AppState.chart-ylabels;
+                    x-left: AppState.chart-xleft;
+                    x-right: AppState.chart-xright;
+                    points: AppState.chart-points;
+                    tip(i) => { return AppState.chart-tip(i); }
+                }
+            }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 8px;
+                HorizontalLayout {
+                    SectionTitle { text: @tr("Активные процессы"); }
+                    Rectangle { horizontal-stretch: 1; }
+                    FlatButton { text: @tr("Все процессы"); icon: "\u{E8FD}"; clicked => { AppState.navigate(1); } }
+                }
+                if !AppState.etw-active: AdminNotice { }
+                if AppState.etw-active && AppState.top.length == 0: Caption { text: @tr("Сейчас нет сетевой активности"); }
+                if AppState.top.length > 0: ProcTable {
+                    rows: AppState.top;
+                    h1: @tr("↓ Загрузка");
+                    h2: @tr("↑ Отдача");
+                    h3: @tr("Всего");
+                    num-width: 130px;
+                    sort-col: AppState.top-sort-col;
+                    sort-asc: AppState.top-sort-asc;
+                    sort(c) => { AppState.sort-top(c); }
+                    open(r) => { AppState.open-process(r); }
+                }
+            }
+        }
+    }
+}
+
+export component ProcessesPage inherits VerticalLayout {
+    padding: 24px;
+    padding-top: 18px;
+    spacing: 14px;
+    HorizontalLayout {
+        spacing: 12px;
+        PageTitle { text: @tr("Процессы"); }
+        Rectangle { horizontal-stretch: 1; }
+        LineEdit {
+            width: 260px;
+            placeholder-text: @tr("Поиск по имени или пути");
+            text <=> AppState.procs-filter;
+            edited(t) => { AppState.filter-procs(t); }
+        }
+    }
+    Caption { text: @tr("Скорость сейчас и трафик за сегодня. Двойной щелчок — подробности о приложении."); }
+    if !AppState.etw-active: AdminNotice { }
+    Card {
+        vertical-stretch: 1;
+        ScrollView {
+            VerticalLayout {
+                padding: 8px;
+                ProcTable {
+                    rows: AppState.procs;
+                    h1: @tr("↓ Сейчас");
+                    h2: @tr("↑ Сейчас");
+                    h3: @tr("Сегодня");
+                    show-pct: true;
+                    sort-col: AppState.procs-sort-col;
+                    sort-asc: AppState.procs-sort-asc;
+                    sort(c) => { AppState.sort-procs(c); }
+                    open(r) => { AppState.open-process(r); }
+                }
+            }
+        }
+    }
+}
+
+export component DetailsPage inherits ScrollView {
+    VerticalLayout {
+        alignment: start;
+        padding: 24px;
+        padding-top: 18px;
+        spacing: 14px;
+        HorizontalLayout {
+            spacing: 12px;
+            FlatButton { icon: "\u{E72B}"; clicked => { AppState.back(); } }
+            Image { source: AppState.det-icon; width: 32px; height: 32px; }
+            VerticalLayout {
+                alignment: center;
+                PageTitle { text: AppState.det-name; font-size: 22px; overflow: elide; }
+                Caption { text: AppState.det-path; overflow: elide; }
+            }
+        }
+        HorizontalLayout {
+            spacing: 12px;
+            StatCard { icon: "\u{E768}"; title: @tr("Сейчас"); value: AppState.det-live; details: ""; }
+            StatCard { icon: "\u{E787}"; title: @tr("Сегодня"); value: AppState.det-today; details: AppState.det-today-details; }
+            StatCard { icon: "\u{E787}"; title: @tr("Расчётный период"); value: AppState.det-period; details: AppState.det-period-details; }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 10px;
+                HorizontalLayout {
+                    spacing: 10px;
+                    SectionTitle { text: @tr("По часам"); vertical-alignment: center; }
+                    Legend { }
+                    Rectangle { horizontal-stretch: 1; }
+                    FlatButton { icon: "\u{E76B}"; clicked => { AppState.det-shift(-1); } }
+                    Text { text: AppState.det-day-text; color: Theme.text; vertical-alignment: center; min-width: 90px; horizontal-alignment: center; }
+                    FlatButton { icon: "\u{E76C}"; clicked => { AppState.det-shift(1); } }
+                }
+                BarChart { height: 220px; bars: AppState.det-bars; y-labels: AppState.det-ylabels; }
+            }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 10px;
+                HorizontalLayout {
+                    spacing: 10px;
+                    SectionTitle { text: @tr("За 30 дней"); vertical-alignment: center; }
+                    Legend { }
+                    Rectangle { horizontal-stretch: 1; }
+                }
+                BarChart { height: 200px; bars: AppState.det-days; y-labels: AppState.det-days-ylabels; }
+            }
+        }
+    }
+}
+
+export component ReportsPage inherits ScrollView {
+    VerticalLayout {
+        alignment: start;
+        padding: 24px;
+        padding-top: 18px;
+        spacing: 14px;
+        HorizontalLayout {
+            spacing: 10px;
+            PageTitle { text: @tr("Отчёты"); }
+            Rectangle { horizontal-stretch: 1; }
+            FlatButton { icon: "\u{E74E}"; text: "CSV"; clicked => { AppState.rep-export("csv"); } }
+            FlatButton { icon: "\u{E74E}"; text: "Excel"; clicked => { AppState.rep-export("xlsx"); } }
+        }
+        HorizontalLayout {
+            spacing: 10px;
+            Segmented {
+                items: [@tr("День"), @tr("Неделя"), @tr("Период")];
+                current: AppState.rep-kind;
+                changed(i) => { AppState.rep-set-kind(i); }
+            }
+            FlatButton { icon: "\u{E76B}"; clicked => { AppState.rep-shift(-1); } }
+            VerticalLayout {
+                alignment: center;
+                Text { text: AppState.rep-period-text; color: Theme.text; font-size: 14px; font-weight: 600; }
+                Caption { text: AppState.rep-prev-text; }
+            }
+            FlatButton { icon: "\u{E76C}"; clicked => { AppState.rep-shift(1); } }
+            Rectangle { horizontal-stretch: 1; }
+            FlatButton { text: @tr("Сегодня"); clicked => { AppState.rep-today(); } }
+        }
+        HorizontalLayout {
+            spacing: 12px;
+            StatCard { icon: "\u{E896}"; title: @tr("Загружено"); value: AppState.rep-down; details: AppState.rep-change-down; accent: Theme.down; }
+            StatCard { icon: "\u{E898}"; title: @tr("Отдано"); value: AppState.rep-up; details: AppState.rep-change-up; accent: Theme.up; }
+            StatCard { title: @tr("Всего"); value: AppState.rep-total; details: AppState.rep-change-total; }
+            StatCard { title: @tr("В среднем"); value: AppState.rep-average; details: AppState.rep-peak; }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 10px;
+                HorizontalLayout {
+                    spacing: 12px;
+                    SectionTitle { text: AppState.rep-chart-title; }
+                    Legend { }
+                }
+                BarChart { height: 260px; bars: AppState.rep-bars; y-labels: AppState.rep-ylabels; }
+            }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 12px;
+                SectionTitle { text: @tr("Приложения"); }
+                if AppState.rep-apps.length == 0: Caption { text: @tr("Нет данных по приложениям за этот период"); }
+                if AppState.rep-apps.length > 0: Donut { slices: AppState.rep-slices; center-text: AppState.rep-apps-total; }
+                if AppState.rep-apps.length > 0: ProcTable {
+                    rows: AppState.rep-apps;
+                    h1: @tr("↓ Загрузка");
+                    h2: @tr("↑ Отдача");
+                    h3: @tr("Всего");
+                    show-pct: true;
+                    sort-col: AppState.rep-sort-col;
+                    sort-asc: AppState.rep-sort-asc;
+                    sort(c) => { AppState.sort-rep(c); }
+                    open(r) => { AppState.open-process(r); }
+                }
+            }
+        }
+    }
+}
+
+component LimitCard inherits Card {
+    in property <string> title;
+    in property <string> used;
+    in property <string> left;
+    in property <float> frac;
+    in property <bool> enabled;
+    horizontal-stretch: 1;
+    VerticalLayout {
+        padding: 16px;
+        spacing: 8px;
+        Caption { text: root.title; }
+        Text { text: root.used; color: Theme.text; font-size: 22px; font-weight: 600; }
+        if root.enabled: Meter { value: root.frac; }
+        Caption { text: root.left; wrap: word-wrap; }
+        @children
+    }
+}
+
+export component LimitsPage inherits ScrollView {
+    VerticalLayout {
+        alignment: start;
+        padding: 24px;
+        padding-top: 18px;
+        spacing: 10px;
+        PageTitle { text: @tr("Лимиты"); }
+        HorizontalLayout {
+            spacing: 12px;
+            LimitCard { title: @tr("Дневной лимит"); used: AppState.lim-today-used; left: AppState.lim-today-left; frac: AppState.lim-today-frac; enabled: AppState.daily-enabled; }
+            LimitCard {
+                title: @tr("Лимит на период");
+                used: AppState.lim-month-used;
+                left: AppState.lim-month-left;
+                frac: AppState.lim-month-frac;
+                enabled: AppState.monthly-enabled;
+                Caption { text: AppState.lim-period-text; }
+                Text { text: AppState.lim-forecast; color: AppState.lim-forecast-over ? Theme.danger : Theme.text; font-size: 13px; font-weight: 600; }
+            }
+        }
+        SectionTitle { text: @tr("Настройки лимитов"); }
+        SettingRow {
+            icon: "\u{E787}";
+            title: @tr("Дневной лимит");
+            hint: @tr("Уведомить, когда за сутки израсходован заданный объём");
+            SpinBox { minimum: 1; maximum: 10000; width: 120px; value <=> AppState.daily-gb; edited => { AppState.limits-changed(); } enabled: AppState.daily-enabled; }
+            Text { text: @tr("ГБ"); color: Theme.text; vertical-alignment: center; }
+            Switch { checked <=> AppState.daily-enabled; toggled => { AppState.limits-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E787}";
+            title: @tr("Лимит на расчётный период");
+            hint: @tr("Например, пакет трафика у провайдера на месяц");
+            SpinBox { minimum: 1; maximum: 100000; width: 120px; value <=> AppState.monthly-gb; edited => { AppState.limits-changed(); } enabled: AppState.monthly-enabled; }
+            Text { text: @tr("ГБ"); color: Theme.text; vertical-alignment: center; }
+            Switch { checked <=> AppState.monthly-enabled; toggled => { AppState.limits-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E8BF}";
+            title: @tr("Начало расчётного периода");
+            hint: @tr("День месяца, с которого провайдер считает трафик");
+            SpinBox { minimum: 1; maximum: 31; width: 120px; value <=> AppState.billing-day; edited => { AppState.limits-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E898}";
+            title: @tr("Учитывать отдачу");
+            hint: @tr("Большинство провайдеров считают загрузку и отдачу вместе");
+            Switch { checked <=> AppState.count-upload; toggled => { AppState.limits-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{EA8F}";
+            title: @tr("Уведомления");
+            hint: @tr("При каком расходе лимита показывать уведомление");
+            CheckBox { text: "80%"; checked <=> AppState.n80; toggled => { AppState.limits-changed(); } }
+            CheckBox { text: "90%"; checked <=> AppState.n90; toggled => { AppState.limits-changed(); } }
+            CheckBox { text: "100%"; checked <=> AppState.n100; toggled => { AppState.limits-changed(); } }
+        }
+        SectionTitle { text: @tr("Журнал уведомлений"); }
+        Card {
+            VerticalLayout {
+                padding: 12px;
+                spacing: 6px;
+                if AppState.alerts.length == 0: Caption { text: @tr("Уведомлений пока не было"); }
+                for a in AppState.alerts: HorizontalLayout {
+                    spacing: 12px;
+                    Caption { text: a.time; width: 120px; }
+                    Text { text: a.text; color: Theme.text; font-size: 13px; wrap: word-wrap; horizontal-stretch: 1; }
+                }
+            }
+        }
+    }
+}
+
+export component SettingsPage inherits ScrollView {
+    VerticalLayout {
+        alignment: start;
+        padding: 24px;
+        padding-top: 18px;
+        spacing: 8px;
+        PageTitle { text: @tr("Настройки"); }
+        if AppState.message != "": Card {
+            background: Theme.accent.with-alpha(0.12);
+            HorizontalLayout {
+                padding: 12px;
+                spacing: 10px;
+                Glyph { text: "\u{E946}"; color: Theme.accent; width: 18px; }
+                Text { text: AppState.message; color: Theme.text; wrap: word-wrap; horizontal-stretch: 1; vertical-alignment: center; }
+            }
+        }
+        SectionTitle { text: @tr("Запуск"); }
+        SettingRow {
+            icon: "\u{E7E8}";
+            title: @tr("Запускать вместе с Windows");
+            hint: AppState.elevated ? @tr("Через Планировщик заданий, с правами администратора и без запроса UAC") : @tr("Нужны права администратора");
+            Switch { checked <=> AppState.s-autostart; enabled: AppState.elevated; toggled => { AppState.autostart-changed(self.checked); } }
+        }
+        SettingRow {
+            icon: "\u{E921}";
+            title: @tr("Сворачивать в трей при закрытии окна");
+            Switch { checked <=> AppState.s-min-tray; toggled => { AppState.settings-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E73F}";
+            title: @tr("Запускать свёрнутым в трей");
+            Switch { checked <=> AppState.s-start-min; toggled => { AppState.settings-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E8FD}";
+            title: @tr("Учёт трафика по процессам");
+            hint: AppState.etw-status;
+            if !AppState.elevated: FlatButton { icon: "\u{EA18}"; text: @tr("Перезапустить от администратора"); clicked => { AppState.restart-elevated(); } }
+            Switch { checked <=> AppState.s-tracking; toggled => { AppState.settings-changed(); } }
+        }
+        SectionTitle { text: @tr("Внешний вид"); }
+        SettingRow {
+            icon: "\u{E790}";
+            title: @tr("Тема");
+            ComboBox { width: 200px; model: [@tr("Как в системе"), @tr("Светлая"), @tr("Тёмная")]; current-index <=> AppState.s-theme; selected => { AppState.settings-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E774}";
+            title: @tr("Язык");
+            ComboBox { width: 200px; model: ["Русский", "English"]; current-index <=> AppState.s-lang; selected => { AppState.settings-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{EC4A}";
+            title: @tr("Единицы скорости");
+            ComboBox { width: 200px; model: [@tr("Биты (Мбит/с)"), @tr("Байты (МБ/с)")]; current-index <=> AppState.s-units; selected => { AppState.settings-changed(); } }
+        }
+        SectionTitle { text: @tr("Сетевые адаптеры"); }
+        SettingRow {
+            icon: "\u{E7F4}";
+            title: @tr("Учитывать виртуальные адаптеры");
+            hint: @tr("Hyper-V, WSL, VirtualBox, VMware, Docker");
+            Switch { checked <=> AppState.s-incl-virtual; toggled => { AppState.settings-changed(); } }
+        }
+        SettingRow {
+            icon: "\u{E705}";
+            title: @tr("Учитывать VPN-адаптеры");
+            hint: @tr("Трафик VPN обычно уже учтён на физическом адаптере — включение может удвоить цифры");
+            Switch { checked <=> AppState.s-incl-vpn; toggled => { AppState.settings-changed(); } }
+        }
+        Card {
+            VerticalLayout {
+                padding: 16px;
+                spacing: 10px;
+                Text { text: @tr("Адаптеры"); color: Theme.text; font-size: 14px; }
+                Caption { text: @tr("Снимите отметку, чтобы не учитывать адаптер"); }
+                for a in AppState.adapters: HorizontalLayout {
+                    spacing: 10px;
+                    CheckBox {
+                        checked: a.enabled;
+                        toggled => { AppState.adapter-toggled(a.id, self.checked); }
+                    }
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        alignment: center;
+                        HorizontalLayout {
+                            spacing: 6px;
+                            Text { text: a.name; color: Theme.text; font-weight: 600; font-size: 13px; }
+                            Text { text: a.desc; color: Theme.text2; font-size: 13px; overflow: elide; horizontal-stretch: 1; }
+                        }
+                        Caption { text: a.details; overflow: elide; }
+                    }
+                    VerticalLayout {
+                        alignment: center;
+                        Rectangle { width: 8px; height: 8px; border-radius: 4px; background: a.up ? Theme.success : Theme.text3; }
+                    }
+                }
+            }
+        }
+        SectionTitle { text: @tr("Данные"); }
+        SettingRow {
+            icon: "\u{E8B7}";
+            title: @tr("Папка данных");
+            hint: AppState.data-path + "  ·  " + AppState.data-size;
+            FlatButton { icon: "\u{E838}"; text: @tr("Открыть"); clicked => { AppState.open-data-folder(); } }
+        }
+        reset := SettingRow {
+            icon: "\u{E74D}";
+            title: @tr("Сбросить статистику");
+            hint: @tr("Удалить всю накопленную статистику. Отменить нельзя");
+            property <bool> confirm;
+            if !reset.confirm: FlatButton { text: @tr("Сбросить"); clicked => { reset.confirm = true; } }
+            if reset.confirm: FlatButton { text: @tr("Отмена"); clicked => { reset.confirm = false; } }
+            if reset.confirm: FlatButton { text: @tr("Да, удалить"); primary: true; clicked => { reset.confirm = false; AppState.reset-stats(); } }
+        }
+        SectionTitle { text: @tr("О программе"); }
+        SettingRow {
+            icon: "\u{E946}";
+            title: "NetpulseRS " + AppState.version;
+            hint: @tr("Монитор сетевого трафика. Rust + Slint, без .NET");
+            FlatButton { icon: "\u{E774}"; text: "GitHub"; clicked => { AppState.open-github(); } }
+        }
+    }
+}

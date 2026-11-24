@@ -1,0 +1,275 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Главная"
+msgstr "Dashboard"
+
+msgid "Процессы"
+msgstr "Processes"
+
+msgid "Отчёты"
+msgstr "Reports"
+
+msgid "Лимиты"
+msgstr "Limits"
+
+msgid "Пауза"
+msgstr "Pause"
+
+msgid "Сбор данных идёт"
+msgstr "Collecting data"
+
+msgid "Только адаптеры"
+msgstr "Adapters only"
+
+msgid "Настройки"
+msgstr "Settings"
+
+msgid "Учёт по процессам недоступен"
+msgstr "Per-process tracking is unavailable"
+
+msgid "Перезапустить от администратора"
+msgstr "Restart as administrator"
+
+msgid "Продолжить"
+msgstr "Resume"
+
+msgid "Загрузка"
+msgstr "Download"
+
+msgid "Отдача"
+msgstr "Upload"
+
+msgid "Сегодня"
+msgstr "Today"
+
+msgid "Расчётный период"
+msgstr "Billing period"
+
+msgid "За всё время"
+msgstr "All time"
+
+msgid "Скорость"
+msgstr "Speed"
+
+msgid "1 мин"
+msgstr "1 min"
+
+msgid "5 мин"
+msgstr "5 min"
+
+msgid "1 час"
+msgstr "1 hour"
+
+msgid "Активные процессы"
+msgstr "Active processes"
+
+msgid "Все процессы"
+msgstr "All processes"
+
+msgid "Сейчас нет сетевой активности"
+msgstr "No network activity right now"
+
+msgid "↓ Загрузка"
+msgstr "↓ Download"
+
+msgid "↑ Отдача"
+msgstr "↑ Upload"
+
+msgid "Всего"
+msgstr "Total"
+
+msgid "Поиск по имени или пути"
+msgstr "Search by name or path"
+
+msgid "Скорость сейчас и трафик за сегодня. Двойной щелчок — подробности о приложении."
+msgstr "Current speed and today's traffic. Double-click for application details."
+
+msgid "↓ Сейчас"
+msgstr "↓ Now"
+
+msgid "↑ Сейчас"
+msgstr "↑ Now"
+
+msgid "Сейчас"
+msgstr "Now"
+
+msgid "По часам"
+msgstr "By hour"
+
+msgid "За 30 дней"
+msgstr "Last 30 days"
+
+msgid "День"
+msgstr "Day"
+
+msgid "Неделя"
+msgstr "Week"
+
+msgid "Период"
+msgstr "Period"
+
+msgid "Загружено"
+msgstr "Downloaded"
+
+msgid "Отдано"
+msgstr "Uploaded"
+
+msgid "В среднем"
+msgstr "Average"
+
+msgid "Приложения"
+msgstr "Applications"
+
+msgid "Нет данных по приложениям за этот период"
+msgstr "No application data for this period"
+
+msgid "Дневной лимит"
+msgstr "Daily limit"
+
+msgid "Лимит на период"
+msgstr "Period limit"
+
+msgid "Настройки лимитов"
+msgstr "Limit settings"
+
+msgid "Уведомить, когда за сутки израсходован заданный объём"
+msgstr "Notify when the daily volume is used up"
+
+msgid "ГБ"
+msgstr "GB"
+
+msgid "Лимит на расчётный период"
+msgstr "Billing period limit"
+
+msgid "Например, пакет трафика у провайдера на месяц"
+msgstr "For example, your provider's monthly data plan"
+
+msgid "Начало расчётного периода"
+msgstr "Billing period start"
+
+msgid "День месяца, с которого провайдер считает трафик"
+msgstr "Day of the month your provider starts counting"
+
+msgid "Учитывать отдачу"
+msgstr "Count upload"
+
+msgid "Большинство провайдеров считают загрузку и отдачу вместе"
+msgstr "Most providers count download and upload together"
+
+msgid "Уведомления"
+msgstr "Notifications"
+
+msgid "При каком расходе лимита показывать уведомление"
+msgstr "Show a notification when this share of the limit is used"
+
+msgid "Журнал уведомлений"
+msgstr "Notification log"
+
+msgid "Уведомлений пока не было"
+msgstr "No notifications yet"
+
+msgid "Запуск"
+msgstr "Startup"
+
+msgid "Запускать вместе с Windows"
+msgstr "Start with Windows"
+
+msgid "Через Планировщик заданий, с правами администратора и без запроса UAC"
+msgstr "Via Task Scheduler, elevated, without a UAC prompt"
+
+msgid "Нужны права администратора"
+msgstr "Administrator rights required"
+
+msgid "Сворачивать в трей при закрытии окна"
+msgstr "Minimize to tray when closing the window"
+
+msgid "Запускать свёрнутым в трей"
+msgstr "Start minimized to tray"
+
+msgid "Учёт трафика по процессам"
+msgstr "Per-process traffic tracking"
+
+msgid "Внешний вид"
+msgstr "Appearance"
+
+msgid "Тема"
+msgstr "Theme"
+
+msgid "Как в системе"
+msgstr "System"
+
+msgid "Светлая"
+msgstr "Light"
+
+msgid "Тёмная"
+msgstr "Dark"
+
+msgid "Язык"
+msgstr "Language"
+
+msgid "Единицы скорости"
+msgstr "Speed units"
+
+msgid "Биты (Мбит/с)"
+msgstr "Bits (Mbps)"
+
+msgid "Байты (МБ/с)"
+msgstr "Bytes (MB/s)"
+
+msgid "Сетевые адаптеры"
+msgstr "Network adapters"
+
+msgid "Учитывать виртуальные адаптеры"
+msgstr "Include virtual adapters"
+
+msgid "Hyper-V, WSL, VirtualBox, VMware, Docker"
+msgstr "Hyper-V, WSL, VirtualBox, VMware, Docker"
+
+msgid "Учитывать VPN-адаптеры"
+msgstr "Include VPN adapters"
+
+msgid "Трафик VPN обычно уже учтён на физическом адаптере — включение может удвоить цифры"
+msgstr "VPN traffic is usually already counted on the physical adapter — enabling this may double the numbers"
+
+msgid "Адаптеры"
+msgstr "Adapters"
+
+msgid "Снимите отметку, чтобы не учитывать адаптер"
+msgstr "Uncheck an adapter to exclude it"
+
+msgid "Данные"
+msgstr "Data"
+
+msgid "Папка данных"
+msgstr "Data folder"
+
+msgid "Открыть"
+msgstr "Open"
+
+msgid "Сбросить статистику"
+msgstr "Reset statistics"
+
+msgid "Удалить всю накопленную статистику. Отменить нельзя"
+msgstr "Delete all collected statistics. This cannot be undone"
+
+msgid "Сбросить"
+msgstr "Reset"
+
+msgid "Отмена"
+msgstr "Cancel"
+
+msgid "Да, удалить"
+msgstr "Yes, delete"
+
+msgid "О программе"
+msgstr "About"
+
+msgid "Монитор сетевого трафика. Rust + Slint, без .NET"
+msgstr "Network traffic monitor. Rust + Slint, no .NET"
+
+msgid "Процесс"
+msgstr "Process"
+
