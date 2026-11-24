@@ -14,16 +14,38 @@ public class ReleaseParserTests
       "prerelease": false,
       "assets": [
         { "name": "NetpulseGUI-1.2.0-setup.exe", "size": 100, "browser_download_url": "https://x/setup.exe", "digest": "sha256:ABCDEF" },
-        { "name": "NetpulseGUI.exe", "size": 200, "browser_download_url": "https://x/NetpulseGUI.exe", "digest": null }
+        { "name": "NetpulseGUI.exe", "size": 200, "browser_download_url": "https://x/NetpulseGUI.exe", "digest": null },
+        { "name": "NetpulseGUI-lite.zip", "size": 50, "browser_download_url": "https://x/NetpulseGUI-lite.zip", "digest": "sha256:FF" }
       ]
     }
     """;
 
-    private static UpdateInfo? Parse(string json, string current, bool installed)
+    private static UpdateInfo? Parse(string json, string current, bool installed, bool lite = false)
     {
         using var doc = JsonDocument.Parse(json);
-        return ReleaseParser.Parse(doc.RootElement, Version.Parse(current), installed);
+        return ReleaseParser.Parse(doc.RootElement, Version.Parse(current), installed, "", lite);
     }
+
+    [Fact]
+    public void LiteCopyGetsLiteExe()
+    {
+        var u = Parse(Release, "1.1.0", installed: false, lite: true)!;
+        Assert.False(u.IsInstaller);
+        Assert.Equal("NetpulseGUI-lite.zip", u.AssetName);
+        Assert.Equal("ff", u.Sha256);
+    }
+
+    [Fact]
+    public void LiteCopyFallsBackToFullExeWhenNoLiteAsset()
+    {
+        var json = Release.Replace("\"NetpulseGUI-lite.zip\"", "\"readme.txt\"");
+        var u = Parse(json, "1.1.0", installed: false, lite: true)!;
+        Assert.Equal("NetpulseGUI.exe", u.AssetName);
+    }
+
+    [Fact]
+    public void FullPortableIgnoresLiteAsset() =>
+        Assert.Equal("NetpulseGUI.exe", Parse(Release, "1.1.0", installed: false)!.AssetName);
 
     [Fact]
     public void InstalledCopyGetsInstallerWithDigest()

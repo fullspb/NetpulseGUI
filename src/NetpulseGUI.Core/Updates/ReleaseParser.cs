@@ -18,9 +18,11 @@ public static class ReleaseParser
 {
     public const string PortableAssetName = "NetpulseGUI.exe";
     public const string InstallerSuffix = "-setup.exe";
+    /// <summary>Портативная сборка без встроенного .NET (нужен установленный .NET Desktop Runtime), в zip-архиве.</summary>
+    public const string LiteAssetName = "NetpulseGUI-lite.zip";
 
     /// <summary>Разбор ответа GitHub API (вынесен отдельно для тестируемости).</summary>
-    public static UpdateInfo? Parse(JsonElement release, Version current, bool installed, string repositoryUrl = "")
+    public static UpdateInfo? Parse(JsonElement release, Version current, bool installed, string repositoryUrl = "", bool lite = false)
     {
         if (release.TryGetProperty("draft", out var draft) && draft.GetBoolean()) return null;
         if (release.TryGetProperty("prerelease", out var pre) && pre.GetBoolean()) return null;
@@ -30,13 +32,17 @@ public static class ReleaseParser
         version = new Version(version.Major, version.Minor, Math.Max(0, version.Build));
         if (version <= current) return null;
 
-        JsonElement? installer = null, portable = null;
+        JsonElement? installer = null, portable = null, liteAsset = null;
         foreach (var asset in release.GetProperty("assets").EnumerateArray())
         {
             var name = asset.GetProperty("name").GetString() ?? "";
             if (name.EndsWith(InstallerSuffix, StringComparison.OrdinalIgnoreCase)) installer = asset;
             else if (name.Equals(PortableAssetName, StringComparison.OrdinalIgnoreCase)) portable = asset;
+            else if (name.Equals(LiteAssetName, StringComparison.OrdinalIgnoreCase)) liteAsset = asset;
         }
+
+        // Lite-копия обновляется lite-файлом; если его нет в релизе — полной портативной версией.
+        if (!installed && lite && liteAsset != null) portable = liteAsset;
 
         // Установленной версии нужен установщик, портативной — exe; если нужного файла нет, берём другой.
         var useInstaller = installed ? installer != null || portable == null : portable == null && installer != null;

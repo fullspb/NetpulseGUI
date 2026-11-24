@@ -32,6 +32,12 @@ public sealed class UpdateService
 
     public static string CurrentExe => Environment.ProcessPath ?? Path.Combine(AppContext.BaseDirectory, "NetpulseGUI.exe");
 
+    /// <summary>Lite-сборка (без встроенного .NET) — помечается атрибутом при публикации.</summary>
+    public static bool IsLite { get; } = typeof(App).Assembly
+        .GetCustomAttributes(typeof(System.Reflection.AssemblyMetadataAttribute), false)
+        .OfType<System.Reflection.AssemblyMetadataAttribute>()
+        .Any(a => a.Key == "NetpulseGUI.Flavor" && a.Value == "lite");
+
     /// <summary>Приложение установлено установщиком Inno Setup (а не запущено как портативный exe).</summary>
     public static bool IsInstalled => File.Exists(Path.Combine(Path.GetDirectoryName(CurrentExe)!, "unins000.exe"));
 
@@ -53,7 +59,7 @@ public sealed class UpdateService
         response.EnsureSuccessStatusCode();
         await using var stream = await response.Content.ReadAsStreamAsync(cts.Token).ConfigureAwait(false);
         using var doc = await JsonDocument.ParseAsync(stream, cancellationToken: cts.Token).ConfigureAwait(false);
-        return ReleaseParser.Parse(doc.RootElement, CurrentVersion, IsInstalled, RepositoryUrl);
+        return ReleaseParser.Parse(doc.RootElement, CurrentVersion, IsInstalled, RepositoryUrl, IsLite);
     }
 
     /// <summary>Скачивает файл обновления во временную папку и проверяет размер и SHA-256.</summary>
@@ -119,6 +125,10 @@ public sealed class UpdateService
             return;
         }
 
+        // Lite-версия приходит в zip: достаём из архива exe.
+        if (downloadedFile.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+            downloadedFile = ExtractExe(downloadedFile);
+
         // Портативная версия: запущенный exe можно переименовать, затем кладём новый на его место.
         var exe = CurrentExe;
         var old = exe + ".old";
@@ -139,6 +149,17 @@ public sealed class UpdateService
             WorkingDirectory = Path.GetDirectoryName(exe)!
         });
         Serilog.Log.Information("Обновление {Version}: exe заменён, перезапуск", info.Version);
+    }
+
+    private static string ExtractExe(string zipPath)
+    {
+        using var zip = System.IO.Compression.ZipFile.OpenRead(zipPath);
+        var entry = zip.Entries.FirstOrDefault(e => e.FullName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+                                                    && !e.FullName.Contains('/') && !e.FullName.Contains('\\'))
+                    ?? throw new InvalidDataException("В архиве обновления нет exe");
+        var target = Path.Combine(Path.GetDirectoryName(zipPath)!, Path.GetFileNameWithoutExtension(zipPath) + ".exe");
+        System.IO.Compression.ZipFileExtensions.ExtractToFile(entry, target, overwrite: true);
+        return target;
     }
 
     /// <summary>Удаляет остатки прошлого обновления: старый exe и скачанные файлы.</summary>

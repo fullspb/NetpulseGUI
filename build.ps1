@@ -32,6 +32,23 @@ if ($LASTEXITCODE -ne 0) { throw 'Ошибка публикации' }
 $exe = Join-Path $publishDir 'NetpulseGUI.exe'
 Write-Host ("NetpulseGUI.exe: {0:N1} МБ" -f ((Get-Item $exe).Length / 1MB))
 
+Write-Host '== Публикация lite (без встроенного .NET, нужен .NET 9 Desktop Runtime) ==' -ForegroundColor Cyan
+$liteDir = Join-Path $artifacts 'publish-lite'
+if (Test-Path $liteDir) { Remove-Item $liteDir -Recurse -Force }
+dotnet publish (Join-Path $root 'src/NetpulseGUI/NetpulseGUI.csproj') -c $Configuration -r win-x64 --self-contained false `
+    -p:PublishSingleFile=true -o $liteDir
+if ($LASTEXITCODE -ne 0) { throw 'Ошибка публикации lite' }
+$liteExe = Join-Path $liteDir 'NetpulseGUI-lite.exe'
+Move-Item (Join-Path $liteDir 'NetpulseGUI.exe') $liteExe -Force
+Get-ChildItem $liteDir -Exclude 'NetpulseGUI-lite.exe' | Remove-Item -Recurse -Force
+$liteZip = Join-Path $artifacts 'NetpulseGUI-lite.zip'
+if (Test-Path $liteZip) { Remove-Item $liteZip -Force }
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$zip = [IO.Compression.ZipFile]::Open($liteZip, 'Create')
+try { [void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $liteExe, 'NetpulseGUI-lite.exe', 'Optimal') }
+finally { $zip.Dispose() }
+Write-Host ("NetpulseGUI-lite.exe: {0:N1} МБ, в zip: {1:N1} МБ" -f ((Get-Item $liteExe).Length / 1MB), ((Get-Item $liteZip).Length / 1MB))
+
 if (-not $SkipInstaller) {
     $iscc = @(
         (Get-Command iscc.exe -ErrorAction SilentlyContinue).Source,

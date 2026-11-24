@@ -18,9 +18,16 @@
   <!-- Портативная сборка: один exe -->
   <PropertyGroup Condition="'$(PublishSingleFile)' == 'true'">
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
+  <!-- Сжатие доступно только для self-contained (со встроенным .NET) -->
+  <PropertyGroup Condition="'$(PublishSingleFile)' == 'true' and '$(SelfContained)' == 'true'">
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+  <!-- Lite-сборка без встроенного .NET: помечаем, чтобы автообновление скачивало тоже lite -->
+  <ItemGroup Condition="'$(PublishSingleFile)' == 'true' and '$(SelfContained)' != 'true'">
+    <AssemblyMetadata Include="NetpulseGUI.Flavor" Value="lite" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="WPF-UI" />
@@ -33,6 +40,14 @@
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Sinks.File" />
   </ItemGroup>
+
+  <!-- msdia140.dll из TraceEvent нужен только для разбора символов (TraceLog); мы читаем события
+       в реальном времени, поэтому не тащим ~9 МБ библиотек на три архитектуры. -->
+  <Target Name="DropMsdia" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Filename)' == 'msdia140'" />
+    </ItemGroup>
+  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\NetpulseGUI.Core\NetpulseGUI.Core.csproj" />
