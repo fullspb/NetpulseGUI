@@ -24,6 +24,9 @@ public sealed class AppSettings
     public bool MinimizeToTrayOnClose { get; set; } = true;
     public bool StartMinimized { get; set; }
     public bool ProcessTrackingEnabled { get; set; } = true;
+    public bool CheckUpdates { get; set; } = true;
+    /// <summary>Версия, о которой уже показывали уведомление (чтобы не повторять его).</summary>
+    public string? NotifiedUpdateVersion { get; set; }
 
     // Адаптеры
     public List<string> ExcludedAdapterIds { get; set; } = new();

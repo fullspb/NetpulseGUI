@@ -236,7 +236,7 @@ public sealed partial class ReportsViewModel : ObservableObject
         PieSeries = pie.ToArray();
 
         TopApps.Clear();
-        foreach (var a in apps.Take(15))
+        foreach (var a in apps.Take(30))
         {
             var path = a.Path.Length > 2 && a.Path[1] == ':' ? a.Path : "";
             var item = new ProcessItem(a.Path, a.ExeName, path)

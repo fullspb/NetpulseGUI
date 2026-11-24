@@ -187,4 +187,21 @@
   <data name="Xlsx_Share" xml:space="preserve"><value>Доля</value></data>
   <data name="Xlsx_Summary" xml:space="preserve"><value>Сводка</value></data>
   <data name="Report_NoPrev" xml:space="preserve"><value>нет данных за прошлый период</value></data>
+  <data name="Report_ColDown" xml:space="preserve"><value>↓ Загрузка</value></data>
+  <data name="Report_ColUp" xml:space="preserve"><value>↑ Отдача</value></data>
+  <data name="Update_Available" xml:space="preserve"><value>Доступна новая версия {0}</value></data>
+  <data name="Update_AvailableHint" xml:space="preserve"><value>Сейчас установлена {0}. Обновление скачается с GitHub и установится, приложение перезапустится.</value></data>
+  <data name="Update_Install" xml:space="preserve"><value>Скачать и установить</value></data>
+  <data name="Update_WhatsNew" xml:space="preserve"><value>Что нового</value></data>
+  <data name="Update_Downloading" xml:space="preserve"><value>Загрузка обновления… {0}</value></data>
+  <data name="Update_Installing" xml:space="preserve"><value>Установка обновления…</value></data>
+  <data name="Update_Check" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="Update_Checking" xml:space="preserve"><value>Проверка обновлений…</value></data>
+  <data name="Update_UpToDate" xml:space="preserve"><value>Установлена последняя версия</value></data>
+  <data name="Update_CheckFailed" xml:space="preserve"><value>Не удалось проверить обновления: {0}</value></data>
+  <data name="Update_Failed" xml:space="preserve"><value>Не удалось установить обновление</value></data>
+  <data name="Update_AutoCheck" xml:space="preserve"><value>Проверять обновления автоматически</value></data>
+  <data name="Update_ToastTitle" xml:space="preserve"><value>Доступно обновление NetpulseGUI {0}</value></data>
+  <data name="Update_ToastText" xml:space="preserve"><value>Откройте «Настройки», чтобы скачать и установить</value></data>
+  <data name="Settings_OpenGitHub" xml:space="preserve"><value>Открыть страницу проекта на GitHub</value></data>
 </root>

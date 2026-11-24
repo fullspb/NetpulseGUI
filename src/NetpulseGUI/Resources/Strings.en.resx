@@ -187,4 +187,21 @@
   <data name="Xlsx_Share" xml:space="preserve"><value>Share</value></data>
   <data name="Xlsx_Summary" xml:space="preserve"><value>Summary</value></data>
   <data name="Report_NoPrev" xml:space="preserve"><value>no data for the previous period</value></data>
+  <data name="Report_ColDown" xml:space="preserve"><value>↓ Download</value></data>
+  <data name="Report_ColUp" xml:space="preserve"><value>↑ Upload</value></data>
+  <data name="Update_Available" xml:space="preserve"><value>Version {0} is available</value></data>
+  <data name="Update_AvailableHint" xml:space="preserve"><value>You have {0}. The update is downloaded from GitHub and installed, then the app restarts.</value></data>
+  <data name="Update_Install" xml:space="preserve"><value>Download and install</value></data>
+  <data name="Update_WhatsNew" xml:space="preserve"><value>What's new</value></data>
+  <data name="Update_Downloading" xml:space="preserve"><value>Downloading update… {0}</value></data>
+  <data name="Update_Installing" xml:space="preserve"><value>Installing update…</value></data>
+  <data name="Update_Check" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="Update_Checking" xml:space="preserve"><value>Checking for updates…</value></data>
+  <data name="Update_UpToDate" xml:space="preserve"><value>You're up to date</value></data>
+  <data name="Update_CheckFailed" xml:space="preserve"><value>Couldn't check for updates: {0}</value></data>
+  <data name="Update_Failed" xml:space="preserve"><value>Couldn't install the update</value></data>
+  <data name="Update_AutoCheck" xml:space="preserve"><value>Check for updates automatically</value></data>
+  <data name="Update_ToastTitle" xml:space="preserve"><value>NetpulseGUI {0} is available</value></data>
+  <data name="Update_ToastText" xml:space="preserve"><value>Open Settings to download and install it</value></data>
+  <data name="Settings_OpenGitHub" xml:space="preserve"><value>Open the project page on GitHub</value></data>
 </root>

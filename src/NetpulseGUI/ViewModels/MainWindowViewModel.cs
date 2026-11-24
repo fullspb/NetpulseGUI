@@ -19,6 +19,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty] private bool _showAdminBanner;
     [ObservableProperty] private bool _isPaused;
+    [ObservableProperty] private bool _updateAvailable;
     [ObservableProperty] private bool _infoOpen;
     [ObservableProperty] private string _infoTitle = "";
     [ObservableProperty] private string _infoMessage = "";

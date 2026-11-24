@@ -132,7 +132,11 @@ public sealed class AppHost : INavigationViewPageProvider
 
         Notifications.Initialize();
         Notifications.Activated += arg => Application.Current?.Dispatcher.BeginInvoke(() =>
-            ShowMainWindow(arg.Contains("limits", StringComparison.Ordinal) ? typeof(LimitsPage) : null));
+            ShowMainWindow(arg.Contains("limits", StringComparison.Ordinal) ? typeof(LimitsPage)
+                : arg.Contains("update", StringComparison.Ordinal) ? typeof(SettingsPage) : null));
+
+        Task.Run(UpdateService.CleanupLeftovers);
+        SettingsVm.StartUpdateChecks();
 
         SystemEvents.PowerModeChanged += OnPowerModeChanged;
         SystemEvents.DisplaySettingsChanged += (_, _) => Application.Current?.Dispatcher.BeginInvoke(() => Tray.Invalidate());

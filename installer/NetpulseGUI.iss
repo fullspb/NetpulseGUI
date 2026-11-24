@@ -2,7 +2,7 @@
 ; Сборка: .\build.ps1   или   ISCC.exe /DAppVersion=1.0.0 /DPublishDir=..\artifacts\publish NetpulseGUI.iss
 
 #ifndef AppVersion
-  #define AppVersion "1.0.1"
+  #define AppVersion "1.1.0"
 #endif
 #ifndef PublishDir
   #define PublishDir "..\artifacts\publish"
@@ -63,6 +63,8 @@ Filename: "{sys}\schtasks.exe"; \
   Parameters: "/Create /F /RL HIGHEST /SC ONLOGON /DELAY 0000:05 /TN ""NetpulseGUI Autostart ({code:TaskUser})"" /TR ""\""{app}\{#AppExe}\"" --minimized"" /RU ""{code:FullUser}"" /IT"; \
   Flags: runhidden; Tasks: autostart
 Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchApp}"; Flags: nowait postinstall skipifsilent shellexec
+; Тихая установка (автообновление из приложения): запускаем новую версию сразу после установки.
+Filename: "{app}\{#AppExe}"; Flags: nowait skipifnotsilent
 
 [UninstallRun]
 ; Корректное завершение (запись буфера и остановка ETW), затем принудительное — на случай зависания.

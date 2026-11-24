@@ -59,7 +59,12 @@
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
                 <ui:NavigationViewItem Content="{l:Loc Nav_Settings}" Icon="{ui:SymbolIcon Settings24}"
-                                       TargetPageType="{x:Type pages:SettingsPage}" />
+                                       TargetPageType="{x:Type pages:SettingsPage}">
+                    <ui:NavigationViewItem.InfoBadge>
+                        <ui:InfoBadge Severity="Attention" Style="{DynamicResource DotInfoBadgeStyle}"
+                                      Visibility="{Binding UpdateAvailable, Converter={StaticResource BoolToVis}}" />
+                    </ui:NavigationViewItem.InfoBadge>
+                </ui:NavigationViewItem>
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
     </Grid>

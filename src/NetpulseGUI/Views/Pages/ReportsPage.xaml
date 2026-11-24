@@ -85,9 +85,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="16" />
-                <ColumnDefinition Width="1.3*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <ui:Card Padding="16" VerticalAlignment="Stretch">
+            <ui:Card Padding="16" VerticalAlignment="Stretch" VerticalContentAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -100,34 +100,48 @@
                                Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />
                 </Grid>
             </ui:Card>
-            <ui:Card Grid.Column="2" Padding="16" VerticalAlignment="Stretch">
+            <ui:Card Grid.Column="2" Padding="16,16,16,8" VerticalAlignment="Stretch" VerticalContentAlignment="Top">
                 <StackPanel>
                     <TextBlock Text="{l:Loc Report_TopProcesses}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,8" />
-                    <ItemsControl ItemsSource="{Binding TopApps}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Background="Transparent" BorderThickness="0" Padding="2,4" HorizontalContentAlignment="Stretch" Cursor="Hand"
-                                        Command="{Binding DataContext.OpenAppCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding}" ToolTip="{Binding ToolTip}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="28" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="90" />
-                                            <ColumnDefinition Width="56" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding Icon}" Width="18" Height="18" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                                            <ProgressBar Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="3" Margin="0,4,12,0" />
-                                        </StackPanel>
-                                        <TextBlock Grid.Column="2" Text="{Binding PeriodTotalText}" TextAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                                        <TextBlock Grid.Column="3" Text="{Binding ShareText}" TextAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Caption}" />
-                                    </Grid>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <DataGrid x:Name="AppsGrid" ItemsSource="{Binding TopApps}"
+                              AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                              CanUserResizeColumns="False" CanUserReorderColumns="False"
+                              SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="None"
+                              RowHeight="38" BorderThickness="0" Background="Transparent"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              Visibility="{Binding HasApps, Converter={StaticResource BoolToVis}}"
+                              PreviewMouseWheel="OnGridPreviewMouseWheel" MouseDoubleClick="OnAppDoubleClick" KeyDown="OnAppKeyDown">
+                        <DataGrid.Resources>
+                            <Style x:Key="NumCell" TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="0,0,8,0" />
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="{l:Loc Common_Process}" Width="*" MinWidth="120" SortMemberPath="Name" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid VerticalAlignment="Center" ToolTip="{Binding ToolTip}" Margin="0,0,8,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="26" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="{Binding Icon}" Width="18" Height="18" HorizontalAlignment="Left" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                                                <ProgressBar Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="3" MinHeight="3" Margin="0,3,0,0" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="84" Binding="{Binding PeriodDownText}" SortMemberPath="PeriodDown" ElementStyle="{StaticResource NumCell}" />
+                            <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="84" Binding="{Binding PeriodUpText}" SortMemberPath="PeriodUp" ElementStyle="{StaticResource NumCell}" />
+                            <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="86" Binding="{Binding PeriodTotalText}" SortMemberPath="PeriodTotal" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" />
+                            <DataGridTextColumn Header="%" Width="52" Binding="{Binding ShareText}" SortMemberPath="Share" ElementStyle="{StaticResource NumCell}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <TextBlock Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />
                 </StackPanel>
             </ui:Card>

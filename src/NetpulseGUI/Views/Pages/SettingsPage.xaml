@@ -181,14 +181,55 @@
 
         <!-- О программе -->
         <TextBlock Text="{l:Loc Settings_About}" Style="{StaticResource SectionTitle}" />
-        <ui:Card Padding="16">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="pack://application:,,,/Assets/netpulse.ico" Width="40" Height="40" />
-                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
-                    <TextBlock FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}"><Run Text="NetpulseGUI " /><Run Text="{Binding Version, Mode=OneWay}" /></TextBlock>
-                    <TextBlock Text="{l:Loc Settings_AboutText}" Style="{StaticResource Caption}" />
+        <ui:Card Padding="16" Margin="0,0,0,4">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <ui:Button Content="{l:Loc Update_Check}" Icon="{ui:SymbolIcon ArrowSync24}" Command="{Binding CheckForUpdatesCommand}"
+                               IsEnabled="{Binding UpdateBusy, Converter={StaticResource InvBool}}" HorizontalAlignment="Right" />
+                    <TextBlock Text="{Binding UpdateStatus}" Style="{StaticResource Caption}" TextAlignment="Right" Margin="0,6,0,0" MaxWidth="320" TextWrapping="Wrap"
+                               Visibility="{Binding UpdateStatus, Converter={StaticResource NullToVis}}" />
                 </StackPanel>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Assets/netpulse.ico" Width="40" Height="40" />
+                    <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                        <TextBlock FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                            <Run Text="NetpulseGUI " />
+                            <Hyperlink Command="{Binding OpenRepositoryCommand}" ToolTip="{l:Loc Settings_OpenGitHub}"
+                                       Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"><Run Text="{Binding Version, Mode=OneWay}" /></Hyperlink>
+                        </TextBlock>
+                        <TextBlock Text="{l:Loc Settings_AboutText}" Style="{StaticResource Caption}" />
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
         </ui:Card>
+        <ui:Card Padding="16,12" Margin="0,0,0,4" Visibility="{Binding UpdateAvailable, Converter={StaticResource BoolToVis}}"
+                 BorderBrush="{DynamicResource AccentFillColorDefaultBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ui:SymbolIcon Symbol="ArrowCircleUp24" FontSize="28" Filled="True" Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,14,0" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
+                    <TextBlock Text="{Binding UpdateTitle}" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                    <TextBlock Text="{Binding UpdateHint}" Style="{StaticResource Caption}" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ui:Button Content="{l:Loc Update_WhatsNew}" Appearance="Transparent" Command="{Binding OpenReleaseNotesCommand}" Margin="0,0,6,0" />
+                    <ui:Button Content="{l:Loc Update_Install}" Appearance="Primary" Icon="{ui:SymbolIcon ArrowDownload24}" Command="{Binding InstallUpdateCommand}"
+                               IsEnabled="{Binding UpdateBusy, Converter={StaticResource InvBool}}" />
+                </StackPanel>
+            </Grid>
+        </ui:Card>
+        <ProgressBar Value="{Binding UpdateProgress, Mode=OneWay}" Maximum="1" Height="4" Margin="0,0,0,4"
+                     Visibility="{Binding UpdateProgressVisible, Converter={StaticResource BoolToVis}}" />
+        <ui:CardControl Icon="{ui:SymbolIcon ArrowSync24}" Margin="0,0,0,4">
+            <ui:CardControl.Header>
+                <TextBlock Text="{l:Loc Update_AutoCheck}" FontWeight="SemiBold" />
+            </ui:CardControl.Header>
+            <ui:ToggleSwitch IsChecked="{Binding CheckUpdates}" />
+        </ui:CardControl>
     </StackPanel>
 </Page>
