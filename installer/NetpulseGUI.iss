@@ -2,7 +2,7 @@
 ; Сборка: .\build.ps1   или   ISCC.exe /DAppVersion=1.0.0 /DPublishDir=..\artifacts\publish NetpulseGUI.iss
 
 #ifndef AppVersion
-  #define AppVersion "1.1.2"
+  #define AppVersion "1.1.3"
 #endif
 #ifndef PublishDir
   #define PublishDir "..\artifacts\publish"

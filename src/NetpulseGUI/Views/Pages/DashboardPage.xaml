@@ -158,7 +158,7 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="{l:Loc Common_Process}" Width="2*" MinWidth="160" SortMemberPath="Name" CanUserSort="True">
+                        <DataGridTemplateColumn Header="{l:Loc Common_Process}" Width="260" SortMemberPath="Name" CanUserSort="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid VerticalAlignment="Center" ToolTip="{Binding ToolTip}" Margin="0,0,16,0">
@@ -167,17 +167,16 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Image Source="{Binding Icon}" Width="20" Height="20" HorizontalAlignment="Left" />
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                                            <ProgressBar Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="3" MinHeight="3" Margin="0,3,0,0" />
-                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="*" MinWidth="110" Binding="{Binding DownSpeedText}" SortMemberPath="DownSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
-                        <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="*" MinWidth="110" Binding="{Binding UpSpeedText}" SortMemberPath="UpSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
-                        <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="*" MinWidth="110" Binding="{Binding TotalSpeedText}" SortMemberPath="TotalSpeed" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="130" Binding="{Binding DownSpeedText}" SortMemberPath="DownSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="130" Binding="{Binding UpSpeedText}" SortMemberPath="UpSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="130" Binding="{Binding TotalSpeedText}" SortMemberPath="TotalSpeed" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <!-- Пустая колонка забирает остаток ширины, чтобы цифры стояли рядом с именем -->
+                        <DataGridTemplateColumn Width="*" CanUserSort="False" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
