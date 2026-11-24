@@ -112,6 +112,10 @@
                               Visibility="{Binding HasApps, Converter={StaticResource BoolToVis}}"
                               PreviewMouseWheel="OnGridPreviewMouseWheel" MouseDoubleClick="OnAppDoubleClick" KeyDown="OnAppKeyDown">
                         <DataGrid.Resources>
+                            <Style x:Key="NumHeader" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}">
+                                <Setter Property="HorizontalContentAlignment" Value="Right" />
+                                <Setter Property="Padding" Value="0,0,8,0" />
+                            </Style>
                             <Style x:Key="NumCell" TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Right" />
                                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -136,10 +140,10 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="84" Binding="{Binding PeriodDownText}" SortMemberPath="PeriodDown" ElementStyle="{StaticResource NumCell}" />
-                            <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="84" Binding="{Binding PeriodUpText}" SortMemberPath="PeriodUp" ElementStyle="{StaticResource NumCell}" />
-                            <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="86" Binding="{Binding PeriodTotalText}" SortMemberPath="PeriodTotal" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" />
-                            <DataGridTextColumn Header="%" Width="52" Binding="{Binding ShareText}" SortMemberPath="Share" ElementStyle="{StaticResource NumCell}" />
+                            <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="84" Binding="{Binding PeriodDownText}" SortMemberPath="PeriodDown" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                            <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="84" Binding="{Binding PeriodUpText}" SortMemberPath="PeriodUp" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                            <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="86" Binding="{Binding PeriodTotalText}" SortMemberPath="PeriodTotal" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                            <DataGridTextColumn Header="%" Width="52" Binding="{Binding ShareText}" SortMemberPath="Share" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBlock Text="{l:Loc Common_NoData}" Style="{StaticResource Caption}" Visibility="{Binding HasApps, Converter={StaticResource InvBoolToVis}}" />

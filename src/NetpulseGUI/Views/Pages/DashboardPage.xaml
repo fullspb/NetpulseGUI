@@ -138,34 +138,48 @@
                     </TextBlock.Visibility>
                 </TextBlock>
 
-                <ItemsControl ItemsSource="{Binding TopProcesses}" Margin="0,8,0,0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Background="Transparent" BorderThickness="0" Padding="4,6" HorizontalContentAlignment="Stretch" Cursor="Hand"
-                                    Command="{Binding DataContext.OpenProcessCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}" ToolTip="{Binding ToolTip}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="120" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="{Binding Icon}" Width="20" Height="20" VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-                                    <ProgressBar Grid.Column="2" Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="4" Margin="12,0" VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="3" VerticalAlignment="Center" TextAlignment="Right" Foreground="{DynamicResource TextFillColorPrimaryBrush}">
-                                        <Run Text="↓" Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" /> <Run Text="{Binding DownSpeedText, Mode=OneWay}" />
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" VerticalAlignment="Center" TextAlignment="Right" Foreground="{DynamicResource TextFillColorPrimaryBrush}">
-                                        <Run Text="↑" Foreground="#FFFF9A3C" /> <Run Text="{Binding UpSpeedText, Mode=OneWay}" />
-                                    </TextBlock>
-                                </Grid>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <DataGrid x:Name="TopGrid" ItemsSource="{Binding TopProcesses}" Margin="0,8,0,0"
+                          AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                          CanUserResizeColumns="False" CanUserReorderColumns="False"
+                          SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="None"
+                          RowHeight="38" BorderThickness="0" Background="Transparent"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          Visibility="{Binding HasTopProcesses, Converter={StaticResource BoolToVis}}"
+                          PreviewMouseWheel="OnGridPreviewMouseWheel" MouseDoubleClick="OnTopDoubleClick" KeyDown="OnTopKeyDown">
+                    <DataGrid.Resources>
+                        <Style x:Key="NumHeader" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}">
+                            <Setter Property="HorizontalContentAlignment" Value="Right" />
+                            <Setter Property="Padding" Value="0,0,8,0" />
+                        </Style>
+                        <Style x:Key="NumCell" TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="0,0,8,0" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="{l:Loc Common_Process}" Width="2*" MinWidth="160" SortMemberPath="Name" CanUserSort="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid VerticalAlignment="Center" ToolTip="{Binding ToolTip}" Margin="0,0,16,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Icon}" Width="20" Height="20" HorizontalAlignment="Left" />
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                                            <ProgressBar Value="{Binding Share, Mode=OneWay}" Maximum="1" Height="3" MinHeight="3" Margin="0,3,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="{l:Loc Report_ColDown}" Width="*" MinWidth="110" Binding="{Binding DownSpeedText}" SortMemberPath="DownSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <DataGridTextColumn Header="{l:Loc Report_ColUp}" Width="*" MinWidth="110" Binding="{Binding UpSpeedText}" SortMemberPath="UpSpeed" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                        <DataGridTextColumn Header="{l:Loc Processes_TotalPeriod}" Width="*" MinWidth="110" Binding="{Binding TotalSpeedText}" SortMemberPath="TotalSpeed" SortDirection="Descending" ElementStyle="{StaticResource NumCell}" HeaderStyle="{StaticResource NumHeader}" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </ui:Card>
     </StackPanel>

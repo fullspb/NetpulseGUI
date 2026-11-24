@@ -33,6 +33,7 @@ public sealed partial class ProcessItem : ObservableObject
 
     public string DownSpeedText => DownSpeed > 0 ? Fmt.Speed(DownSpeed) : "—";
     public string UpSpeedText => UpSpeed > 0 ? Fmt.Speed(UpSpeed) : "—";
+    public string TotalSpeedText => TotalSpeed > 0 ? Fmt.Speed(TotalSpeed) : "—";
     public string PeriodDownText => Fmt.Bytes(PeriodDown);
     public string PeriodUpText => Fmt.Bytes(PeriodUp);
     public string PeriodTotalText => Fmt.Bytes(PeriodTotal);
@@ -43,12 +44,14 @@ public sealed partial class ProcessItem : ObservableObject
     {
         OnPropertyChanged(nameof(DownSpeedText));
         OnPropertyChanged(nameof(TotalSpeed));
+        OnPropertyChanged(nameof(TotalSpeedText));
     }
 
     partial void OnUpSpeedChanged(double value)
     {
         OnPropertyChanged(nameof(UpSpeedText));
         OnPropertyChanged(nameof(TotalSpeed));
+        OnPropertyChanged(nameof(TotalSpeedText));
     }
 
     partial void OnPeriodDownChanged(long value)
