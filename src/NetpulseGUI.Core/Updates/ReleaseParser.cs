@@ -21,7 +21,11 @@ public static class ReleaseParser
     /// <summary>Портативная сборка без встроенного .NET (нужен установленный .NET Desktop Runtime), в zip-архиве.</summary>
     public const string LiteAssetName = "NetpulseGUI-lite.zip";
 
-    /// <summary>Разбор ответа GitHub API (вынесен отдельно для тестируемости).</summary>
+    /// <summary>
+    /// Разбор ответа GitHub API (вынесен отдельно для тестируемости).
+    /// <paramref name="lite"/> — предпочесть lite-архив: для lite-копии, а также для установленной копии,
+    /// если в системе есть .NET Desktop Runtime (тогда вместо установщика ~74 МБ качается архив ~22 МБ).
+    /// </summary>
     public static UpdateInfo? Parse(JsonElement release, Version current, bool installed, string repositoryUrl = "", bool lite = false)
     {
         if (release.TryGetProperty("draft", out var draft) && draft.GetBoolean()) return null;
@@ -41,11 +45,12 @@ public static class ReleaseParser
             else if (name.Equals(LiteAssetName, StringComparison.OrdinalIgnoreCase)) liteAsset = asset;
         }
 
-        // Lite-копия обновляется lite-файлом; если его нет в релизе — полной портативной версией.
-        if (!installed && lite && liteAsset != null) portable = liteAsset;
+        // Lite-архив, если он предпочтителен и есть в релизе: exe заменяется на месте (и у установленной копии).
+        var useLite = lite && liteAsset != null;
+        if (useLite) portable = liteAsset;
 
         // Установленной версии нужен установщик, портативной — exe; если нужного файла нет, берём другой.
-        var useInstaller = installed ? installer != null || portable == null : portable == null && installer != null;
+        var useInstaller = !useLite && (installed ? installer != null || portable == null : portable == null && installer != null);
         var chosen = useInstaller ? installer : portable;
         if (chosen is not { } a) return null;
 

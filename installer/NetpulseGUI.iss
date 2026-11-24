@@ -2,7 +2,7 @@
 ; Сборка: .\build.ps1   или   ISCC.exe /DAppVersion=1.0.0 /DPublishDir=..\artifacts\publish NetpulseGUI.iss
 
 #ifndef AppVersion
-  #define AppVersion "1.1.4"
+  #define AppVersion "1.1.5"
 #endif
 #ifndef PublishDir
   #define PublishDir "..\artifacts\publish"
@@ -51,6 +51,10 @@ Name: "autostart"; Description: "{cm:AutoStart}"; GroupDescription: "{cm:Additio
 
 [Files]
 Source: "{#PublishDir}\{#AppExe}"; DestDir: "{app}"; Flags: ignoreversion
+
+[UninstallDelete]
+; Остаток обновления заменой exe (если приложение не успело удалить его само).
+Type: files; Name: "{app}\{#AppExe}.old"
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"

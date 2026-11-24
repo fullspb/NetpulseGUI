@@ -41,6 +41,24 @@ public sealed class UpdateService
     /// <summary>Приложение установлено установщиком Inno Setup (а не запущено как портативный exe).</summary>
     public static bool IsInstalled => File.Exists(Path.Combine(Path.GetDirectoryName(CurrentExe)!, "unins000.exe"));
 
+    /// <summary>AppId из installer/NetpulseGUI.iss — ключ удаления программы в реестре.</summary>
+    private const string UninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{5B0F3C1E-8E2A-4C59-9F3B-6B1D2A9C7E41}_is1";
+
+    /// <summary>Минимальная мажорная версия .NET Desktop Runtime для lite-сборки (net9, с переходом на новые).</summary>
+    private const int LiteMinRuntimeMajor = 9;
+
+    /// <summary>
+    /// Обновляться ли lite-архивом (~22 МБ) вместо полной сборки.
+    /// Портативная lite-копия — всегда. Установленная — если в системе есть .NET Desktop Runtime 9+
+    /// и у нас есть права администратора (exe лежит в Program Files). Иначе — установщик, как раньше.
+    /// </summary>
+    public static bool PreferLite()
+    {
+        if (!IsInstalled) return IsLite;
+        if (!ElevationService.IsElevated) return false;
+        return IsLite || DotNetRuntimeProbe.HasDesktopRuntime(LiteMinRuntimeMajor);
+    }
+
     private static HttpClient CreateClient()
     {
         var http = new HttpClient { Timeout = TimeSpan.FromMinutes(10) };
@@ -59,7 +77,7 @@ public sealed class UpdateService
         response.EnsureSuccessStatusCode();
         await using var stream = await response.Content.ReadAsStreamAsync(cts.Token).ConfigureAwait(false);
         using var doc = await JsonDocument.ParseAsync(stream, cancellationToken: cts.Token).ConfigureAwait(false);
-        return ReleaseParser.Parse(doc.RootElement, CurrentVersion, IsInstalled, RepositoryUrl, IsLite);
+        return ReleaseParser.Parse(doc.RootElement, CurrentVersion, IsInstalled, RepositoryUrl, PreferLite());
     }
 
     /// <summary>Скачивает файл обновления во временную папку и проверяет размер и SHA-256.</summary>
@@ -143,12 +161,36 @@ public sealed class UpdateService
             throw;
         }
 
+        if (IsInstalled) UpdateUninstallEntry(info.Version);
+
         Process.Start(new ProcessStartInfo(exe, ElevationService.RestartedArg)
         {
             UseShellExecute = true,
             WorkingDirectory = Path.GetDirectoryName(exe)!
         });
         Serilog.Log.Information("Обновление {Version}: exe заменён, перезапуск", info.Version);
+    }
+
+    /// <summary>
+    /// Установленная копия обновлена заменой exe, минуя установщик: обновляем версию
+    /// в «Программы и компоненты», чтобы там не висела старая.
+    /// </summary>
+    private static void UpdateUninstallEntry(Version version)
+    {
+        try
+        {
+            using var hklm = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64);
+            using var key = hklm.OpenSubKey(UninstallKey, writable: true);
+            if (key == null) return;
+            var v = version.ToString(3);
+            key.SetValue("DisplayVersion", v);
+            key.SetValue("DisplayName", $"NetpulseGUI {v}");
+            Serilog.Log.Information("Версия в «Программы и компоненты» обновлена до {Version}", v);
+        }
+        catch (Exception ex)
+        {
+            Serilog.Log.Warning(ex, "Не удалось обновить версию в «Программы и компоненты»");
+        }
     }
 
     private static string ExtractExe(string zipPath)

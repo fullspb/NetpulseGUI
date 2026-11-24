@@ -44,6 +44,33 @@ public class ReleaseParserTests
     }
 
     [Fact]
+    public void InstalledCopyWithRuntimeGetsLiteInsteadOfInstaller()
+    {
+        var u = Parse(Release, "1.1.0", installed: true, lite: true)!;
+        Assert.False(u.IsInstaller);
+        Assert.Equal("NetpulseGUI-lite.zip", u.AssetName);
+    }
+
+    [Fact]
+    public void InstalledCopyWithRuntimeFallsBackToInstallerWithoutLiteAsset()
+    {
+        var json = Release.Replace("\"NetpulseGUI-lite.zip\"", "\"readme.txt\"");
+        Assert.True(Parse(json, "1.1.0", installed: true, lite: true)!.IsInstaller);
+    }
+
+    [Theory]
+    [InlineData(new[] { "8.0.11" }, false)]
+    [InlineData(new[] { "8.0.11", "9.0.0" }, true)]
+    [InlineData(new[] { "10.0.0-preview.7.25380.108" }, true)]
+    [InlineData(new string[0], false)]
+    public void RuntimeVersionCheck(string[] versions, bool expected) =>
+        Assert.Equal(expected, DotNetRuntimeProbe.HasMajorAtLeast(versions, 9));
+
+    [Fact]
+    public void ThisMachineHasDesktopRuntime10() =>
+        Assert.True(DotNetRuntimeProbe.HasDesktopRuntime(9), string.Join(", ", DotNetRuntimeProbe.InstalledDesktopVersions()));
+
+    [Fact]
     public void FullPortableIgnoresLiteAsset() =>
         Assert.Equal("NetpulseGUI.exe", Parse(Release, "1.1.0", installed: false)!.AssetName);
 
