@@ -1,5 +1,6 @@
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using Microsoft.Win32;
 
 namespace NetpulseGUI.Core.Collection;
 
@@ -29,9 +30,11 @@ public static class AdapterInventory
         try { all = NetworkInterface.GetAllNetworkInterfaces(); }
         catch (NetworkInformationException) { return result; }
 
+        var visible = ControlPanelAdapterIds();
         foreach (var ni in all)
         {
             if (ni.NetworkInterfaceType == NetworkInterfaceType.Loopback) continue;
+            if (!IsUserVisible(ni.Id, ni.Name, ni.Description, visible)) continue;
             try
             {
                 var props = ni.GetIPProperties();
@@ -71,5 +74,74 @@ public static class AdapterInventory
             .ThenBy(a => a.Kind)
             .ThenBy(a => a.Name, StringComparer.CurrentCultureIgnoreCase)
             .ToList();
+    }
+
+    private const string NetClassGuid = "{4D36E972-E325-11CE-BFC1-08002BE10318}";
+    private const int NcfHidden = 0x8;
+
+    /// <summary>
+    /// GUID адаптеров, которые видны в «Панель управления → Сетевые подключения»:
+    /// у них есть ключ Network\{класс}\{GUID}\Connection, а в ключе драйвера нет флага NCF_HIDDEN.
+    /// Служебные интерфейсы (фильтры QoS/WFP, WAN Miniport, Wi-Fi Direct, Teredo и т. п.) туда не попадают.
+    /// Возвращает null, если реестр прочитать не удалось.
+    /// </summary>
+    public static HashSet<string>? ControlPanelAdapterIds()
+    {
+        try
+        {
+            var hidden = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var registered = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            using (var cls = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + NetClassGuid))
+            {
+                if (cls == null) return null;
+                foreach (var sub in cls.GetSubKeyNames())
+                {
+                    try
+                    {
+                        using var k = cls.OpenSubKey(sub);
+                        if (k?.GetValue("NetCfgInstanceId") is not string id) continue;
+                        registered.Add(id);
+                        var characteristics = k.GetValue("Characteristics") is int c ? c : 0;
+                        if ((characteristics & NcfHidden) != 0) hidden.Add(id);
+                    }
+                    catch (System.Security.SecurityException)
+                    {
+                        // Ключ «Properties» и подобные закрыты для чтения — пропускаем.
+                    }
+                }
+            }
+
+            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            using var net = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Network\" + NetClassGuid);
+            if (net == null) return null;
+            foreach (var id in net.GetSubKeyNames())
+            {
+                if (!registered.Contains(id) || hidden.Contains(id)) continue;
+                using var conn = net.OpenSubKey(id + @"\Connection");
+                if (conn != null) result.Add(id);
+            }
+            return result.Count > 0 ? result : null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    private static readonly string[] ServiceMarkers =
+    {
+        "QoS Packet Scheduler", "LightWeight Filter", "WFP ", "WAN Miniport", "Kernel Debug",
+        "Teredo", "ISATAP", "6to4", "IP-HTTPS", "Wi-Fi Direct Virtual"
+    };
+
+    /// <summary>Показывать ли адаптер пользователю (в настройках и списках).</summary>
+    public static bool IsUserVisible(string id, string name, string description, HashSet<string>? controlPanelIds)
+    {
+        if (controlPanelIds != null && !controlPanelIds.Contains(id)) return false;
+        // Дополнительно (и как запасной вариант без реестра) отсекаем служебные интерфейсы по названию.
+        foreach (var m in ServiceMarkers)
+            if (name.Contains(m, StringComparison.OrdinalIgnoreCase) || description.Contains(m, StringComparison.OrdinalIgnoreCase))
+                return false;
+        return true;
     }
 }
